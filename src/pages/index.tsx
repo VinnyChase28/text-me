@@ -1,9 +1,12 @@
+import { useState, useEffect } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { trpc } from "../utils/trpc";
 import TechnologyCard from "../components/Card";
+import { supabase } from "../utils/supabaseClient";
 
 const Home: NextPage = () => {
+  const user = supabase.auth.user();
   return (
     <>
       <Head>
@@ -17,8 +20,9 @@ const Home: NextPage = () => {
           Text <span className="text-purple-300">Me</span> Stuff
         </h1>
         <p className="text-2xl text-gray-700">
-          Welcome! Text Me Stuff allows you to get useful text message reminders
-          either daily or weekly on specified days of the week:
+          {user ? "Welcome back! " : "Welcome! "}
+          Text Me Stuff allows you to get useful text message reminders either
+          daily or weekly on specified days of the week:
         </p>
         <div className="grid gap-3 pt-3 mt-3 text-center md:grid-cols-2 lg:w-2/3">
           <TechnologyCard

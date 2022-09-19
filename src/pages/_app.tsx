@@ -1,14 +1,43 @@
 // src/pages/_app.tsx
+import { useEffect, useState } from "react";
 import { httpBatchLink } from "@trpc/client/links/httpBatchLink";
 import { loggerLink } from "@trpc/client/links/loggerLink";
 import { withTRPC } from "@trpc/next";
 import type { AppType } from "next/dist/shared/lib/utils";
 import superjson from "superjson";
 import type { AppRouter } from "../server/router";
+import { supabase } from "../utils/supabaseClient";
 import "../styles/globals.css";
 
+import { getPosition } from "../utils/getPosition";
+
 const MyApp: AppType = ({ Component, pageProps }) => {
-  return <Component {...pageProps} />;
+  const [location, setLocation] = useState({ latitude: null, longitude: null });
+  useEffect(() => {
+    getPosition()
+      .then((position: any) => {
+        setLocation({
+          ...location,
+          latitude: position?.coords?.latitude.toString(),
+          longitude: position?.coords?.longitude.toString(),
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
+  const user = supabase.auth.user();
+
+  if (!location.latitude && !location.longitude) {
+    return (
+      <p>
+        Please enable location tracking! We are useless without it. Yours truly,
+        totally not the CCP
+      </p>
+    );
+  }
+  return <Component props={user} {...pageProps} />;
 };
 
 const getBaseUrl = () => {

@@ -1,6 +1,5 @@
 import { createRouter } from "./context";
 import { z } from "zod";
-import { supabase } from "../../utils/supabaseClient";
 import { baseUrls } from "../../utils/baseUrls";
 
 export const mainRouter = createRouter().query("new-cron", {
