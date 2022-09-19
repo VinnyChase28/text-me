@@ -6,7 +6,7 @@ import Form from "../components/Form";
 
 const Weather: NextPage = () => {
   const hello = trpc.useQuery([
-    "main.new-cron",
+    "weather.new-cron",
     { text: "from Vince's app", lat: 49.319981, lon: -123.072411 },
   ]);
 
@@ -19,7 +19,7 @@ const Weather: NextPage = () => {
       </Head>
 
       <main className="container mx-auto flex flex-col items-center justify-center min-h-screen p-4">
-        {hello.data ? <p>{hello.data.greeting}</p> : <p>Loading..</p>}
+        {hello.data ? <p>{hello.data.response}</p> : <p>Loading..</p>}
         <Form
           name="Weather"
           description="Get weather reminders whenever you need them"

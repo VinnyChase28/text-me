@@ -2,11 +2,11 @@
 import { createRouter } from "./context";
 import superjson from "superjson";
 
-import { mainRouter } from "./main";
+import { mainRouter } from "./weather";
 
 export const appRouter = createRouter()
   .transformer(superjson)
-  .merge("main.", mainRouter);
+  .merge("weather.", mainRouter);
   
 // export type definition of API
 export type AppRouter = typeof appRouter;
