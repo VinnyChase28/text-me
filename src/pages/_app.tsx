@@ -6,10 +6,10 @@ import { withTRPC } from "@trpc/next";
 import type { AppType } from "next/dist/shared/lib/utils";
 import superjson from "superjson";
 import type { AppRouter } from "../server/router";
-import { supabase } from "../utils/supabaseClient";
 import "../styles/globals.css";
 
 import { getPosition } from "../utils/getPosition";
+import Layout from "../components/Layout";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   const [location, setLocation] = useState({ latitude: null, longitude: null });
@@ -27,8 +27,6 @@ const MyApp: AppType = ({ Component, pageProps }) => {
       });
   }, []);
 
-  const user = supabase.auth.user();
-
   if (!location.latitude && !location.longitude) {
     return (
       <p>
@@ -37,7 +35,11 @@ const MyApp: AppType = ({ Component, pageProps }) => {
       </p>
     );
   }
-  return <Component props={user} {...pageProps} />;
+  return (
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
+  );
 };
 
 const getBaseUrl = () => {

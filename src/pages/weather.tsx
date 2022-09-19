@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { trpc } from "../utils/trpc";
@@ -5,10 +6,13 @@ import { trpc } from "../utils/trpc";
 import Form from "../components/Form";
 
 const Weather: NextPage = () => {
+  //this variable makes a req to the new-cron route with a payload
   const hello = trpc.useQuery([
     "weather.new-cron",
     { text: "from Vince's app", lat: 49.319981, lon: -123.072411 },
   ]);
+
+  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone ?? null;
 
   return (
     <>
@@ -22,6 +26,7 @@ const Weather: NextPage = () => {
         {hello.data ? <p>{hello.data.response}</p> : <p>Loading..</p>}
         <Form
           name="Weather"
+          api="weather"
           description="Get weather reminders whenever you need them"
         />
       </main>

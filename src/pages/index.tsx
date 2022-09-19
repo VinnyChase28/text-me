@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { trpc } from "../utils/trpc";
-import TechnologyCard from "../components/Card";
+import Card from "../components/Card";
 import { supabase } from "../utils/supabaseClient";
 
 const Home: NextPage = () => {
-  const user = supabase.auth.user();
+  const user = supabase?.auth?.user();
   return (
     <>
       <Head>
@@ -25,12 +25,12 @@ const Home: NextPage = () => {
           daily or weekly on specified days of the week:
         </p>
         <div className="grid gap-3 pt-3 mt-3 text-center md:grid-cols-2 lg:w-2/3">
-          <TechnologyCard
+          <Card
             name="Weather"
             description="Get weather reminders whenever you need them"
             link={"/weather"}
           />
-          <TechnologyCard
+          <Card
             name="Quotes"
             description="Need an afternoon pick-me-up? Get an inspirational quote sent to you."
             link={"/"}
