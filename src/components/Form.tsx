@@ -10,9 +10,38 @@ type FormProps = {
   description: string;
 };
 
+type Time = {
+  hour: string;
+  amOrPm: string;
+};
+
 const Form = ({ name, api, description }: FormProps) => {
   const user = supabase.auth.user();
   const [location, setLocation] = useState({ latitude: null, longitude: null });
+
+  console.log("location", location);
+
+  //get user's time inputs, make sure in 24 hour format
+  const [time, setTime] = useState<Time>({ hour: "9", amOrPm: "AM" });
+
+  const time12 = moment(`${time.hour} ${time.amOrPm}`, "h A").format("HH");
+  const time24 = moment(time12, ["h A"]).format("HH");
+
+  const [state, setState] = useState({
+    text: "",
+    city: "",
+    timezone: timezone,
+    phone: user?.phone ?? "",
+    occurrence: "daily",
+    day: 0,
+    time: time24,
+    api_id: 1,
+    api_name: api,
+    api_active: true,
+    latitude: location?.latitude,
+    longitude: location?.longitude,
+  });
+
   useEffect(() => {
     getPosition()
       .then((position: any) => {
@@ -27,24 +56,24 @@ const Form = ({ name, api, description }: FormProps) => {
       });
   }, []);
 
-  const [state, setState] = useState({
-    text: "",
-    city: "",
-    timezone: timezone,
-    phone: user?.phone ?? "",
-    occurrence: "daily",
-    day: 0,
-    time: moment().format("HH"),
-    api_id: 1,
-    api_name: api,
-    api_active: true,
-    latitude: location?.latitude ?? "",
-    longitude: location?.longitude ?? "",
-  });
-  console.log(state);
+  useEffect(() => {
+    setState({
+      ...state,
+      latitude: location?.latitude,
+      longitude: location?.longitude,
+    });
+  }, [location]);
+
+  useEffect(() => {
+    setState({ ...state, time: time24 });
+  }, [time]);
+
   const [submitted, setSubmitted] = useState(false);
+
+  console.log(state);
+
   return (
-    <div className="w-full max-w-m">
+    <div className="w max-w-s">
       <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div className="mb-4">
           <label
@@ -59,6 +88,7 @@ const Form = ({ name, api, description }: FormProps) => {
             type="text"
             value={user?.phone}
             placeholder="+12345678910"
+            onChange={(e) => setState({ ...state, phone: e.target.value })}
           />
         </div>
         <div className="mb-6">
@@ -71,7 +101,7 @@ const Form = ({ name, api, description }: FormProps) => {
           <button
             onClick={(e) => {
               e.preventDefault();
-              console.log("daily clicked");
+              setState({ ...state, occurrence: "daily" });
             }}
             className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded m-1"
           >
@@ -80,12 +110,13 @@ const Form = ({ name, api, description }: FormProps) => {
           <button
             onClick={(e) => {
               e.preventDefault();
-              console.log("weekly clicked");
+              setState({ ...state, occurrence: "weekly" });
             }}
             className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
           >
             Weekly
           </button>
+
           <p className="text-red-500 text-xs italic">
             Please choose a password.
           </p>
@@ -95,6 +126,9 @@ const Form = ({ name, api, description }: FormProps) => {
               <select
                 name="hours"
                 className="bg-transparent text-xl appearance-none outline-none hover:cursor-pointer"
+                onChange={(e) => {
+                  setTime({ ...time, hour: e.target.value });
+                }}
               >
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -114,117 +148,61 @@ const Form = ({ name, api, description }: FormProps) => {
                 name="minutes"
                 className="bg-transparent text-xl appearance-none outline-none mr-4 hover:cursor-pointer"
               >
-                <option value="0">00</option>
+                {/* TODO: add quarter hour increments later */}
+                {/* <option value="0">00</option>
                 <option value="30">15</option>
                 <option value="30">30</option>
-                <option value="30">45</option>
+                <option value="30">45</option> */}
               </select>
               <select
                 name="ampm"
                 className="bg-transparent text-xl appearance-none outline-none hover:cursor-pointer"
+                onChange={(e) => {
+                  setTime({ ...time, amOrPm: e.target.value });
+                }}
               >
-                <option value="am">AM</option>
-                <option value="pm">PM</option>
+                <option value="AM">AM</option>
+                <option value="PM">PM</option>
               </select>
             </div>
           </div>
-          <div className="mt-2 p-5 w-40 bg-white rounded-lg shadow-xl hover:cursor-pointer">
-            <div className="flex">
-              <select
-                name="days"
-                className="bg-transparent text-xl appearance-none outline-none hover:cursor-pointer"
-              >
-                <option value="1">Monday</option>
-                <option value="2">Tuesday</option>
-                <option value="3">Wednesday</option>
-                <option value="4">Thursday</option>
-                <option value="5">Friday</option>
-                <option value="6">Saturday</option>
-                <option value="7">Sunday</option>
-              </select>
+          {state.occurrence === "weekly" ? (
+            <div className="mt-2 p-5 w-40 bg-white rounded-lg shadow-xl hover:cursor-pointer">
+              <div className="flex">
+                <select
+                  name="days"
+                  onChange={(e) => {
+                    setState({ ...state, day: parseInt(e.target.value) });
+                  }}
+                  className="bg-transparent text-xl appearance-none outline-none hover:cursor-pointer"
+                >
+                  <option value={0}>Monday</option>
+                  <option value={1}>Tuesday</option>
+                  <option value={2}>Wednesday</option>
+                  <option value={3}>Thursday</option>
+                  <option value={4}>Friday</option>
+                  <option value={5}>Saturday</option>
+                  <option value={6}>Sunday</option>
+                </select>
+              </div>
             </div>
-          </div>
+          ) : null}
         </div>
-        <div className="mb-4 w-full bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600">
-          <div className="py-2 px-4 bg-white rounded-t-lg dark:bg-gray-800">
-            <label htmlFor="comment" className="sr-only">
-              Your comment
-            </label>
-            <textarea
-              id="comment"
-              rows={4}
-              className="px-0 w-full text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
-              placeholder="Write a comment..."
-              required
-            ></textarea>
-          </div>
-          <div className="flex justify-between items-center py-2 px-3 border-t dark:border-gray-600">
-            <button
-              type="submit"
-              className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800"
-            >
-              Post comment
-            </button>
-            <div className="flex pl-0 space-x-1 sm:pl-2">
-              <button
-                type="button"
-                className="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
-              >
-                <svg
-                  aria-hidden="true"
-                  className="w-5 h-5"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-                <span className="sr-only">Attach file</span>
-              </button>
-              <button
-                type="button"
-                className="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
-              >
-                <svg
-                  aria-hidden="true"
-                  className="w-5 h-5"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-                <span className="sr-only">Set location</span>
-              </button>
-              <button
-                type="button"
-                className="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
-              >
-                <svg
-                  aria-hidden="true"
-                  className="w-5 h-5"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-                <span className="sr-only">Upload image</span>
-              </button>
-            </div>
-          </div>
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="username"
+          >
+            Custom Message
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="phone"
+            type="text"
+            value={state.text}
+            placeholder="Enter a few words here"
+            onChange={(e) => setState({ ...state, text: e.target.value })}
+          />
         </div>
       </form>
     </div>
