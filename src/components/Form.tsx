@@ -8,6 +8,7 @@ type FormProps = {
   name: string;
   api: string;
   description: string;
+  api_id: number;
 };
 
 type Time = {
@@ -15,15 +16,12 @@ type Time = {
   amOrPm: string;
 };
 
-const Form = ({ name, api, description }: FormProps) => {
+const Form = ({ name, api, api_id, description }: FormProps) => {
   const user = supabase.auth.user();
   const [location, setLocation] = useState({ latitude: null, longitude: null });
 
-  console.log("location", location);
-
   //get user's time inputs, make sure in 24 hour format
   const [time, setTime] = useState<Time>({ hour: "9", amOrPm: "AM" });
-
   const time12 = moment(`${time.hour} ${time.amOrPm}`, "h A").format("HH");
   const time24 = moment(time12, ["h A"]).format("HH");
 
@@ -35,7 +33,7 @@ const Form = ({ name, api, description }: FormProps) => {
     occurrence: "daily",
     day: 0,
     time: time24,
-    api_id: 1,
+    api_id: api_id,
     api_name: api,
     api_active: true,
     latitude: location?.latitude,
@@ -69,8 +67,6 @@ const Form = ({ name, api, description }: FormProps) => {
   }, [time]);
 
   const [submitted, setSubmitted] = useState(false);
-
-  console.log(state);
 
   return (
     <div className="w max-w-s">

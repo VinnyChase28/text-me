@@ -2,17 +2,24 @@ import { useState } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { trpc } from "../utils/trpc";
-
 import Form from "../components/Form";
+import Banner from "../components/Banner";
+import WeatherCard from "../components/WeatherCard";
 
 const Weather: NextPage = () => {
   //this variable makes a req to the new-cron route with a payload
-  const hello = trpc.useQuery([
-    "weather.new-cron",
-    { text: "from Vince's app", lat: 49.319981, lon: -123.072411 },
+  const weather = trpc.useQuery([
+    "weather.get-weather",
+    { lat: 49.319981, lon: -123.072411 },
   ]);
-
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone ?? null;
+
+  const weatherData = weather?.data?.response;
+
+  const WeatherInfo = Object.entries(weatherData ?? {}).map(([key, value]) => {
+    console.log(key, value);
+    return <WeatherCard key={key}>Test</WeatherCard>;
+  });
 
   return (
     <>
@@ -22,11 +29,26 @@ const Weather: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="container mx-auto flex flex-col items-center justify-center min-h-screen p-4">
-        {hello.data ? <p>{hello.data.response}</p> : <p>Loading..</p>}
+      <main className="container mx-auto flex flex-col justify-center p-4">
+        <Banner>
+          {weather.data ? (
+            Object.entries(weatherData ?? {}).map(([key, value]) => {
+              console.log(key, value);
+              return (
+                <WeatherCard key={key}>
+                  <p>{JSON.stringify({ key, value })}</p>
+                </WeatherCard>
+              );
+            })
+          ) : (
+            <p>Loading..</p>
+          )}
+        </Banner>
+
         <Form
           name="Weather"
           api="weather"
+          api_id={1}
           description="Get weather reminders whenever you need them"
         />
       </main>

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { prependOnceListener } from "process";
 
 type CardProps = {
   name: string;
