@@ -1,7 +1,7 @@
 // src/server/router/index.ts
 import { createRouter } from "./context";
 import superjson from "superjson";
-import { mainRouter } from "./get-weather-data";
+import { mainRouter } from "./weather/get-weather-data";
 
 export const appRouter = createRouter()
   .transformer(superjson)
