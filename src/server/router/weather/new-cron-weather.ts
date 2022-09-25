@@ -37,7 +37,7 @@ export const mainRouter = createRouter().query("new-cron", {
     twilioClient.messages
       .create({
         body: `${"text"}\n\n ${"description"}\n ${"temp"}°C"`,
-        to: `${"phone number"}`, // Text this number
+        to: `${"2369995843"}`, // Text this number
         from: "+16043328356", // From a valid Twilio number
       })
       .then((message: any) => console.log(message.sid));
