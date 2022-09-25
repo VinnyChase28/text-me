@@ -1,8 +1,11 @@
 import React from "react";
 import Link from "next/link";
+import { supabase } from "../utils/supabaseClient";
 
 const Navbar = () => {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
+  const user = supabase.auth.user();
+  console.log("test", user);
   return (
     <>
       <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-violet-500 mb-3">
@@ -41,19 +44,14 @@ const Navbar = () => {
                 <Link href="/auth">
                   <a className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75">
                     <i className="fab fa-facebook-square text-lg leading-lg text-white opacity-75"></i>
-                    <span className="ml-2">Sign In</span>
+                    {user ? (
+                      <span className="ml-2">Sign In</span>
+                    ) : (
+                      <span className="ml-2">{JSON.stringify(user)}</span>
+                    )}
                   </a>
                 </Link>
               </li>
-              {/* <li className="nav-item">
-                <a
-                  className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                  href="#pablo"
-                >
-                  <i className="fab fa-pinterest text-lg leading-lg text-white opacity-75"></i>
-                  <span className="ml-2">Pin</span>
-                </a>
-              </li> */}
             </ul>
           </div>
         </div>

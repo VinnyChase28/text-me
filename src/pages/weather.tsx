@@ -7,12 +7,11 @@ import Banner from "../components/Banner";
 import WeatherCard from "../components/WeatherCard";
 
 const Weather: NextPage = () => {
-  //this variable makes a req to the new-cron route with a payload
+  //this variable makes a req to the get-weather route with a payload
   const weather = trpc.useQuery([
     "weather.get-weather",
     { lat: 49.319981, lon: -123.072411 },
   ]);
-  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone ?? null;
 
   const [weatherData, setWeatherData] = useState<any>();
 
