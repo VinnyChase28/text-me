@@ -71,6 +71,7 @@ const Form = ({ name, api, api_id, description }: FormProps) => {
   return (
     <div className="w max-w-s">
       <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <h1 className="m-4">New Reminder</h1>
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
@@ -85,6 +86,22 @@ const Form = ({ name, api, api_id, description }: FormProps) => {
             value={user?.phone}
             placeholder="+12345678910"
             onChange={(e) => setState({ ...state, phone: e.target.value })}
+          />
+        </div>
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="username"
+          >
+            Custom Message
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="phone"
+            type="text"
+            value={state.text}
+            placeholder="Enter a few words here"
+            onChange={(e) => setState({ ...state, text: e.target.value })}
           />
         </div>
         <div className="mb-6">
@@ -183,22 +200,6 @@ const Form = ({ name, api, api_id, description }: FormProps) => {
               </div>
             </div>
           ) : null}
-        </div>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="username"
-          >
-            Custom Message
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="phone"
-            type="text"
-            value={state.text}
-            placeholder="Enter a few words here"
-            onChange={(e) => setState({ ...state, text: e.target.value })}
-          />
         </div>
       </form>
     </div>
