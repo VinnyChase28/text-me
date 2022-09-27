@@ -6,7 +6,7 @@ const weatherApiKey = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
 const accountSid = process.env.NEXT_PUBLIC_TWILIO_SID;
 const authToken = process.env.NEXT_PUBLIC_TWILIO_AUTHTOKEN;
 
-export const mainRouter = createRouter().query("get-weather", {
+export const weatherRouter = createRouter().query("get-weather", {
   //this is the input provided by the client
   input: z
     .object({

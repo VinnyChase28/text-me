@@ -7,7 +7,7 @@ const weatherApiKey = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
 const accountSid = process.env.NEXT_PUBLIC_TWILIO_SID;
 const authToken = process.env.NEXT_PUBLIC_TWILIO_AUTHTOKEN;
 
-export const mainRouter = createRouter().query("new-cron", {
+export const weatherCronRouter: any = createRouter().query("new-weather-cron", {
   //this is the input provided by the client
   input: z
     .object({
