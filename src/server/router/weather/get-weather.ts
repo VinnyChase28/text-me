@@ -15,8 +15,8 @@ export const weatherRouter = createRouter().query("get-weather", {
     })
     .nullish(),
   async resolve({ input }) {
-    const lat = input?.lat;
-    const lon = input?.lon;
+    const lat = input?.lat ?? 49.319981;
+    const lon = input?.lon ?? -123.072411;
     const data = await fetch(
       `${baseUrls.weather}?lat=${lat}&lon=${lon}&appid=${weatherApiKey}&units=metric`
     )
@@ -26,6 +26,7 @@ export const weatherRouter = createRouter().query("get-weather", {
       .then((data) => {
         return data;
       });
+      
     return {
       response: data,
     };

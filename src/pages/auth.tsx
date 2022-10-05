@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { supabase } from "../utils/supabaseClient";
 
@@ -7,7 +7,6 @@ const VerifyOTP = (props: any) => {
   const { push } = useRouter();
   const phone: any = props.phone;
   const [user, setUser] = useState();
-  console.log(user);
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
@@ -47,10 +46,7 @@ const VerifyOTP = (props: any) => {
 const Auth = () => {
   const [phone, setPhone] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  useEffect(() => {
-    console.log(phone);
-  }, [phone]);
-
+  
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const { user, error } = await supabase.auth.signIn({ phone });

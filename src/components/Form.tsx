@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../utils/supabaseClient";
+import { trpc } from "../utils/trpc";
 import moment from "moment";
 import { getPosition } from "../utils/getPosition";
 const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone ?? null;
@@ -39,6 +40,13 @@ const Form = ({ name, api, api_id, description }: FormProps) => {
     latitude: location?.latitude,
     longitude: location?.longitude,
   });
+
+  
+  const sendUserData = () => {
+    const response = trpc.useQuery(["weather.new-weather-cron", state]);
+    //handle errors here
+    return response;
+  };
 
   useEffect(() => {
     getPosition()

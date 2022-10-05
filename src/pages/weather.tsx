@@ -13,19 +13,35 @@ const Weather: NextPage = () => {
     { lat: 49.319981, lon: -123.072411 },
   ]);
 
-  const [weatherData, setWeatherData] = useState<any>();
-
   useEffect(() => {
-    setWeatherData(weather?.data?.response);
+    console.log(weather?.data?.response);
   }, [weather]);
 
-  const sky = weatherData?.weather[0]?.description;
-  const temp = weatherData?.main?.temp;
-  const feelsLike = weatherData?.main?.feels_like;
-  const minTemp = weatherData?.main?.temp_min;
-  const maxTemp = weatherData?.main?.temp_max;
-  const country = weatherData?.sys?.country;
-  const name = weatherData?.name;
+  const [weatherData, setWeatherData] = useState<any>({
+    sky: "",
+    temp: "",
+    feelsLike: "",
+    minTemp: "",
+    maxTemp: "",
+    country: "",
+    name: "",
+  });
+
+  useEffect(() => {
+    if (weather?.data?.response) {
+      console.log("WEATHER DATA", weather.data);
+      setWeatherData({
+        ...weatherData,
+        sky: weather?.data?.response.weather[0]?.description,
+        temp: weather?.data?.response.main.temp,
+        feelsLike: weather?.data?.response.main.feels_like,
+        minTemp: weather?.data?.response.main.temp_min,
+        maxTemp: weather?.data?.response.main.temp_max,
+        country: weather?.data?.response.sys.country,
+        name: weather?.data?.response.name,
+      });
+    }
+  }, [weather?.data?.response]);
 
   return (
     <>
@@ -37,14 +53,14 @@ const Weather: NextPage = () => {
 
       <main className="container mx-auto flex flex-col justify-center p-4">
         <Banner>
-          {weather.data ? (
+          {weather ? (
             <div className="grid gap-3 pt-3 mt-3 text-center md:grid-cols-4">
-              <WeatherCard>{`${name}, ${country}`}</WeatherCard>
-              <WeatherCard>{sky}</WeatherCard>
-              <WeatherCard>{`${temp}°C`}</WeatherCard>
-              <WeatherCard>{`Feels like ${feelsLike}°C`}</WeatherCard>
-              <WeatherCard>{`Low ${minTemp}°C`}</WeatherCard>
-              <WeatherCard>{`High ${maxTemp}°C`}</WeatherCard>
+              <WeatherCard>{`${weatherData.name}, ${weatherData.country}`}</WeatherCard>
+              <WeatherCard>{weatherData.sky}</WeatherCard>
+              <WeatherCard>{`${weatherData.temp}°C`}</WeatherCard>
+              <WeatherCard>{`Feels like ${weatherData.feelsLike}°C`}</WeatherCard>
+              <WeatherCard>{`Low ${weatherData.minTemp}°C`}</WeatherCard>
+              <WeatherCard>{`High ${weatherData.maxTemp}°C`}</WeatherCard>
             </div>
           ) : (
             <p>Loading..</p>

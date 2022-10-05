@@ -5,7 +5,6 @@ import { supabase } from "../utils/supabaseClient";
 const Navbar = () => {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
   const user = supabase.auth.user();
-  console.log("test", user);
   return (
     <>
       <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-violet-500 mb-3">
