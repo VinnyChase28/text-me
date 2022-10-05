@@ -6,3 +6,6 @@ Things I want to practice and showcase for this portfolio project:
 - Strong typings on both the front and backend
 - Testing
 - Heavy task scheduling using CRON
+- Skeleton Loaders
+- Dynamically changing UI
+- Usage of the Twilio API for both reminders and authentication
