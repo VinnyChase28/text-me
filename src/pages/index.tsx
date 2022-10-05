@@ -32,7 +32,7 @@ const Home: NextPage = () => {
           />
           <Card
             name="Quotes"
-            description="Need an afternoon pick-me-up? Get an inspirational quote sent to you."
+            description="Need an afternoon pick-me-up? Get an inspirational quote sent to you"
             link={"/quotes"}
           />
         </div>

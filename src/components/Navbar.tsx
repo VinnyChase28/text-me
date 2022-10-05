@@ -5,7 +5,6 @@ import { supabase } from "../utils/supabaseClient";
 const Navbar = () => {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
   const user = supabase.auth.user();
-  console.log(user);
   return (
     <>
       <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-violet-500 mb-3">
@@ -41,16 +40,19 @@ const Navbar = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link href="/auth">
-                  <a className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75">
-                    <i className="fab fa-facebook-square text-lg leading-lg text-white opacity-75"></i>
-                    {user ? (
-                      <span className="ml-2">{JSON.stringify(user)}</span>
-                    ) : (
+                {user ? (
+                  <Link href="/">
+                    <a className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75">
+                      <span className="ml-2">{user.phone}</span>
+                    </a>
+                  </Link>
+                ) : (
+                  <Link href="/auth">
+                    <a className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75">
                       <span className="ml-2">Sign In</span>
-                    )}
-                  </a>
-                </Link>
+                    </a>
+                  </Link>
+                )}
               </li>
             </ul>
           </div>
