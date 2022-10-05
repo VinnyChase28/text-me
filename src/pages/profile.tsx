@@ -8,7 +8,6 @@ export default function Profile() {
   useEffect(() => {
     getPosition()
       .then((position: any) => {
-        console.log(position);
         setLocation({
           ...location,
           latitude: position?.coords?.latitude,
@@ -69,18 +68,6 @@ export default function Profile() {
                   <h3 className="text-4xl font-semibold leading-normal mb-2 text-gray-800 mb-2">
                     {`+${user?.phone}`}
                   </h3>
-                  <div className="text-sm leading-normal mt-0 mb-2 text-gray-500 font-bold uppercase">
-                    <i className="fas fa-map-marker-alt mr-2 text-lg text-gray-500"></i>{" "}
-                    Los Angeles, California
-                  </div>
-                  <div className="mb-2 text-gray-700 mt-10">
-                    <i className="fas fa-briefcase mr-2 text-lg text-gray-500"></i>
-                    Solution Manager - Creative Tim Officer
-                  </div>
-                  <div className="mb-2 text-gray-700">
-                    <i className="fas fa-university mr-2 text-lg text-gray-500"></i>
-                    University of Computer Science
-                  </div>
                 </div>
                 <div className="mt-10 py-10 border-t border-gray-300 text-center">
                   <div className="flex flex-wrap justify-center">

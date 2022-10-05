@@ -10,6 +10,7 @@ type FormProps = {
   api: string;
   description: string;
   api_id: number;
+  data: object;
 };
 
 type Time = {
@@ -17,7 +18,7 @@ type Time = {
   amOrPm: string;
 };
 
-const Form = ({ name, api, api_id, description }: FormProps) => {
+const Form = ({ name, api, api_id, description, data }: FormProps) => {
   const user = supabase.auth.user();
   const [location, setLocation] = useState({ latitude: null, longitude: null });
 
@@ -39,6 +40,7 @@ const Form = ({ name, api, api_id, description }: FormProps) => {
     api_active: true,
     latitude: location?.latitude,
     longitude: location?.longitude,
+    data: data,
   });
 
   // const sendUserData = () => {
