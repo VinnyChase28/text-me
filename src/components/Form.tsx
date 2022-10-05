@@ -41,11 +41,11 @@ const Form = ({ name, api, api_id, description }: FormProps) => {
     longitude: location?.longitude,
   });
 
-  const sendUserData = () => {
-    const response = trpc.useQuery(["weather.new-weather-cron", state]);
-    //handle errors here
-    return response;
-  };
+  // const sendUserData = () => {
+  //   const response = trpc.useQuery(["weather.new-weather-cron", state]);
+  //   //handle errors here
+  //   return response;
+  // };
 
   useEffect(() => {
     getPosition()
@@ -78,7 +78,9 @@ const Form = ({ name, api, api_id, description }: FormProps) => {
   return (
     <div className="w max-w-s">
       <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <h1 className="m-4">New Reminder</h1>
+        <h1 className="m-4">New Text</h1>
+        <p>{description}</p>
+        <br />
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
