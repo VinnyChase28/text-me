@@ -7,7 +7,7 @@ const Navbar = () => {
   const user = supabase.auth.user();
   return (
     <>
-      <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-violet-500 mb-3">
+      <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-violet-500 ">
         <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
           <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
             <Link href="/">
@@ -41,7 +41,7 @@ const Navbar = () => {
               </li>
               <li className="nav-item">
                 {user ? (
-                  <Link href="/">
+                  <Link href="/profile">
                     <a className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75">
                       <span className="ml-2">{user.phone}</span>
                     </a>
@@ -49,7 +49,7 @@ const Navbar = () => {
                 ) : (
                   <Link href="/auth">
                     <a className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75">
-                      <span className="ml-2">Sign In</span>
+                      <span className="ml-2">Sign</span>
                     </a>
                   </Link>
                 )}

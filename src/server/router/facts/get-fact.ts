@@ -1,10 +1,11 @@
 import { createRouter } from "../context";
+import { z } from "zod";
 import { baseUrls } from "../../../utils/baseUrls";
 
-export const quoteRouter: any = createRouter().query("get-quote", {
+export const factRouter: any = createRouter().query("get-fact", {
   //this is the input provided by the client
   async resolve() {
-    const data = await fetch(`${baseUrls.quote}`)
+    const data = await fetch(`${baseUrls.uselessFacts}`)
       .then((res) => {
         return res.json();
       })

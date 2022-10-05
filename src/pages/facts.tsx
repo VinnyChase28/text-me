@@ -5,21 +5,17 @@ import { trpc } from "../utils/trpc";
 import Form from "../components/Form";
 import Banner from "../components/Banner";
 
-const Quotes: NextPage = () => {
+const Facts: NextPage = () => {
   //this variable makes a req to the get-weather route with a payload
-  const quoteData = trpc.useQuery(["quotes.get-quote"]);
-  const [quote, setQuote] = useState({ saying: "", author: "" });
-  const { saying } = quote;
-  const { author } = quote;
+  const factData = trpc.useQuery(["facts.get-fact"]);
+  const [fact, setFact] = useState("");
 
   useEffect(() => {
-    if (quoteData?.data?.response) {
-      setQuote({
-        saying: quoteData?.data?.response.text,
-        author: quoteData?.data?.response.author.name,
-      });
+    if (factData?.data?.response) {
+      setFact(factData?.data?.response.text);
     }
-  }, [quoteData?.data?.response]);
+    console.log(fact);
+  }, [factData?.data?.response]);
 
   return (
     <>
@@ -46,7 +42,7 @@ const Quotes: NextPage = () => {
             </svg>
             <blockquote>
               <p className="text-2xl italic font-medium text-gray-900 dark:text-black">
-                {saying}
+                {fact}
               </p>
             </blockquote>
             <figcaption className="flex justify-center items-center mt-6 space-x-3">
@@ -56,9 +52,7 @@ const Quotes: NextPage = () => {
                 alt="profile picture"
               />
               <div className="flex items-center divide-x-2 divide-gray-500 dark:divide-gray-700">
-                <cite className="pl-3 text-sm font-light text-gray-500 dark:text-gray-400">
-                  {author}
-                </cite>
+                <cite className="pl-3 text-sm font-light text-gray-500 dark:text-gray-400"></cite>
               </div>
             </figcaption>
           </figure>
@@ -67,12 +61,12 @@ const Quotes: NextPage = () => {
         <Form
           name="Weather"
           api="weather"
-          api_id={2}
-          description="Get inspirational quotes whenever you need them"
+          api_id={3}
+          description="Get totally useless facts you can share with your friends"
         />
       </main>
     </>
   );
 };
 
-export default Quotes;
+export default Facts;

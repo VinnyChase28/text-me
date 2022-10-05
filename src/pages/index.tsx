@@ -36,6 +36,13 @@ const Home: NextPage = () => {
             link={"/quotes"}
           />
         </div>
+        <div className="grid gap-3 pt-3 mt-3 text-center md:grid-cols-2 lg:w-2/3">
+          <Card
+            name="Facts"
+            description="Get completely useless facts you can share with your friends"
+            link={"/facts"}
+          />
+        </div>
         <div className="pt-6 text-2xl text-blue-500 flex justify-center items-center w-full"></div>
       </main>
     </>
