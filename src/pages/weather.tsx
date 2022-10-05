@@ -83,6 +83,7 @@ const Weather: NextPage = () => {
             api="weather"
             api_id={1}
             description="Get weather reminders whenever you need them"
+            data={{}}
           />
         ) : (
           <p>Waiting for weather data...</p>

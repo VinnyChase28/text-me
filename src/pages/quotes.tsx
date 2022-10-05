@@ -69,6 +69,7 @@ const Quotes: NextPage = () => {
           api="weather"
           api_id={2}
           description="Get inspirational quotes whenever you need them"
+          data={{}}
         />
       </main>
     </>

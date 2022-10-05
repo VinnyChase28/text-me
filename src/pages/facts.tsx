@@ -63,6 +63,7 @@ const Facts: NextPage = () => {
           api="weather"
           api_id={3}
           description="Get totally useless facts you can share with your friends"
+          data={{}}
         />
       </main>
     </>
