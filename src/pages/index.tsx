@@ -33,7 +33,7 @@ const Home: NextPage = () => {
           <Card
             name="Quotes"
             description="Need an afternoon pick-me-up? Get an inspirational quote sent to you."
-            link={"/"}
+            link={"/quotes"}
           />
         </div>
         <div className="pt-6 text-2xl text-blue-500 flex justify-center items-center w-full"></div>

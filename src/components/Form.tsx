@@ -41,7 +41,6 @@ const Form = ({ name, api, api_id, description }: FormProps) => {
     longitude: location?.longitude,
   });
 
-  
   const sendUserData = () => {
     const response = trpc.useQuery(["weather.new-weather-cron", state]);
     //handle errors here

@@ -5,17 +5,29 @@ import { trpc } from "../utils/trpc";
 import Form from "../components/Form";
 import Banner from "../components/Banner";
 import WeatherCard from "../components/WeatherCard";
+import { getPosition } from "../utils/getPosition";
 
 const Weather: NextPage = () => {
   //this variable makes a req to the get-weather route with a payload
+  const [location, setLocation] = useState({ latitude: null, longitude: null });
+  useEffect(() => {
+    getPosition()
+      .then((position: any) => {
+        setLocation({
+          ...location,
+          latitude: position?.coords?.latitude,
+          longitude: position?.coords?.longitude,
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
   const weather = trpc.useQuery([
     "weather.get-weather",
-    { lat: 49.319981, lon: -123.072411 },
+    { lat: location.latitude, lon: location.longitude },
   ]);
-
-  useEffect(() => {
-    console.log(weather?.data?.response);
-  }, [weather]);
 
   const [weatherData, setWeatherData] = useState<any>({
     sky: "",
@@ -29,7 +41,6 @@ const Weather: NextPage = () => {
 
   useEffect(() => {
     if (weather?.data?.response) {
-      console.log("WEATHER DATA", weather.data);
       setWeatherData({
         ...weatherData,
         sky: weather?.data?.response.weather[0]?.description,
@@ -55,7 +66,7 @@ const Weather: NextPage = () => {
         <Banner>
           {weather ? (
             <div className="grid gap-3 pt-3 mt-3 text-center md:grid-cols-4">
-              <WeatherCard>{`${weatherData.name}, ${weatherData.country}`}</WeatherCard>
+              <WeatherCard>{`${weatherData.name} ${weatherData.country}`}</WeatherCard>
               <WeatherCard>{weatherData.sky}</WeatherCard>
               <WeatherCard>{`${weatherData.temp}°C`}</WeatherCard>
               <WeatherCard>{`Feels like ${weatherData.feelsLike}°C`}</WeatherCard>
@@ -66,13 +77,16 @@ const Weather: NextPage = () => {
             <p>Loading..</p>
           )}
         </Banner>
-
-        <Form
-          name="Weather"
-          api="weather"
-          api_id={1}
-          description="Get weather reminders whenever you need them"
-        />
+        {weatherData ? (
+          <Form
+            name="Weather"
+            api="weather"
+            api_id={1}
+            description="Get weather reminders whenever you need them"
+          />
+        ) : (
+          <p>Waiting for weather data...</p>
+        )}
       </main>
     </>
   );
