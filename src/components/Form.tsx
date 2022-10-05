@@ -88,14 +88,18 @@ const Form = ({ name, api, api_id, description }: FormProps) => {
           >
             Phone Number
           </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="phone"
-            type="text"
-            value={user?.phone}
-            placeholder="+12345678910"
-            onChange={(e) => setState({ ...state, phone: e.target.value })}
-          />
+          {!user?.phone ? (
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="phone"
+              type="text"
+              value={user?.phone}
+              placeholder="+12345678910"
+              onChange={(e) => setState({ ...state, phone: e.target.value })}
+            />
+          ) : (
+            <p>{user?.phone}</p>
+          )}
         </div>
         <div className="mb-4">
           <label
