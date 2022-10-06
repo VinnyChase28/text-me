@@ -16,7 +16,7 @@ const Quotes: NextPage = () => {
     if (quoteData?.data?.response) {
       setQuote({
         saying: quoteData?.data?.response.text,
-        author: quoteData?.data?.response.author.name,
+        author: quoteData?.data?.response?.author?.name,
       });
     }
   }, [quoteData?.data?.response]);

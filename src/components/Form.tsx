@@ -79,144 +79,146 @@ const Form = ({ name, api, api_id, description, data }: FormProps) => {
 
   return (
     <div className="w max-w-s">
-      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <h1 className="m-4">New Text</h1>
-        <p>{description}</p>
-        <br />
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="username"
-          >
-            Phone Number
-          </label>
-          {!user?.phone ? (
+      {user && (
+        <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+          <h1 className="m-4">New Text</h1>
+          <p>{description}</p>
+          <br />
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="username"
+            >
+              Phone Number
+            </label>
+            {!user?.phone ? (
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="phone"
+                type="text"
+                value={user?.phone}
+                placeholder="+12345678910"
+                onChange={(e) => setState({ ...state, phone: e.target.value })}
+              />
+            ) : (
+              <p>{user?.phone}</p>
+            )}
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="username"
+            >
+              Custom Message
+            </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="phone"
               type="text"
-              value={user?.phone}
-              placeholder="+12345678910"
-              onChange={(e) => setState({ ...state, phone: e.target.value })}
+              value={state.text}
+              placeholder="Enter a few words here"
+              onChange={(e) => setState({ ...state, text: e.target.value })}
             />
-          ) : (
-            <p>{user?.phone}</p>
-          )}
-        </div>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="username"
-          >
-            Custom Message
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="phone"
-            type="text"
-            value={state.text}
-            placeholder="Enter a few words here"
-            onChange={(e) => setState({ ...state, text: e.target.value })}
-          />
-        </div>
-        <div className="mb-6">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="password"
-          >
-            Occurrence
-          </label>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              setState({ ...state, occurrence: "daily" });
-            }}
-            className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded m-1"
-          >
-            Daily
-          </button>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              setState({ ...state, occurrence: "weekly" });
-            }}
-            className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
-          >
-            Weekly
-          </button>
-
-          <p className="text-red-500 text-xs italic">
-            Please choose a password.
-          </p>
-
-          <div className="mt-2 p-5 w-40 bg-white rounded-lg shadow-xl hover:cursor-pointer">
-            <div className="flex">
-              <select
-                name="hours"
-                className="bg-transparent text-xl appearance-none outline-none hover:cursor-pointer"
-                onChange={(e) => {
-                  setTime({ ...time, hour: e.target.value });
-                }}
-              >
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">10</option>
-                <option value="12">12</option>
-              </select>
-              <span className="text-xl mr-3">:</span>
-              <select
-                name="minutes"
-                className="bg-transparent text-xl appearance-none outline-none mr-4 hover:cursor-pointer"
-              >
-                {/* TODO: add quarter hour increments later */}
-                {/* <option value="0">00</option>
-                <option value="30">15</option>
-                <option value="30">30</option>
-                <option value="30">45</option> */}
-              </select>
-              <select
-                name="ampm"
-                className="bg-transparent text-xl appearance-none outline-none hover:cursor-pointer"
-                onChange={(e) => {
-                  setTime({ ...time, amOrPm: e.target.value });
-                }}
-              >
-                <option value="AM">AM</option>
-                <option value="PM">PM</option>
-              </select>
-            </div>
           </div>
-          {state.occurrence === "weekly" ? (
+          <div className="mb-6">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="password"
+            >
+              Occurrence
+            </label>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setState({ ...state, occurrence: "daily" });
+              }}
+              className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded m-1"
+            >
+              Daily
+            </button>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setState({ ...state, occurrence: "weekly" });
+              }}
+              className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
+            >
+              Weekly
+            </button>
+
+            <p className="text-red-500 text-xs italic">
+              Please choose a password.
+            </p>
+
             <div className="mt-2 p-5 w-40 bg-white rounded-lg shadow-xl hover:cursor-pointer">
               <div className="flex">
                 <select
-                  name="days"
-                  onChange={(e) => {
-                    setState({ ...state, day: parseInt(e.target.value) });
-                  }}
+                  name="hours"
                   className="bg-transparent text-xl appearance-none outline-none hover:cursor-pointer"
+                  onChange={(e) => {
+                    setTime({ ...time, hour: e.target.value });
+                  }}
                 >
-                  <option value={0}>Monday</option>
-                  <option value={1}>Tuesday</option>
-                  <option value={2}>Wednesday</option>
-                  <option value={3}>Thursday</option>
-                  <option value={4}>Friday</option>
-                  <option value={5}>Saturday</option>
-                  <option value={6}>Sunday</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">10</option>
+                  <option value="12">12</option>
+                </select>
+                <span className="text-xl mr-3">:</span>
+                <select
+                  name="minutes"
+                  className="bg-transparent text-xl appearance-none outline-none mr-4 hover:cursor-pointer"
+                >
+                  {/* TODO: add quarter hour increments later */}
+                  {/* <option value="0">00</option>
+                <option value="30">15</option>
+                <option value="30">30</option>
+                <option value="30">45</option> */}
+                </select>
+                <select
+                  name="ampm"
+                  className="bg-transparent text-xl appearance-none outline-none hover:cursor-pointer"
+                  onChange={(e) => {
+                    setTime({ ...time, amOrPm: e.target.value });
+                  }}
+                >
+                  <option value="AM">AM</option>
+                  <option value="PM">PM</option>
                 </select>
               </div>
             </div>
-          ) : null}
-        </div>
-      </form>
+            {state.occurrence === "weekly" ? (
+              <div className="mt-2 p-5 w-40 bg-white rounded-lg shadow-xl hover:cursor-pointer">
+                <div className="flex">
+                  <select
+                    name="days"
+                    onChange={(e) => {
+                      setState({ ...state, day: parseInt(e.target.value) });
+                    }}
+                    className="bg-transparent text-xl appearance-none outline-none hover:cursor-pointer"
+                  >
+                    <option value={0}>Monday</option>
+                    <option value={1}>Tuesday</option>
+                    <option value={2}>Wednesday</option>
+                    <option value={3}>Thursday</option>
+                    <option value={4}>Friday</option>
+                    <option value={5}>Saturday</option>
+                    <option value={6}>Sunday</option>
+                  </select>
+                </div>
+              </div>
+            ) : null}
+          </div>
+        </form>
+      )}
     </div>
   );
 };
