@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { supabase } from "../utils/supabaseClient";
 import { trpc } from "../utils/trpc";
 import moment from "moment";
 import { getPosition } from "../utils/getPosition";
+import autoAnimate from "@formkit/auto-animate";
 const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone ?? null;
 
 type FormProps = {
@@ -21,7 +22,15 @@ type Time = {
 const Form = ({ name, api, api_id, description, data }: FormProps) => {
   const user = supabase.auth.user();
   const [location, setLocation] = useState({ latitude: null, longitude: null });
+  const [form, showForm] = useState(false);
+  const reveal = () => {
+    showForm(!form);
+  };
 
+  const parent = useRef(null);
+  useEffect(() => {
+    parent.current && autoAnimate(parent.current);
+  }, [parent]);
   //get user's time inputs, make sure in 24 hour format
   const [time, setTime] = useState<Time>({ hour: "9", amOrPm: "AM" });
   const time12 = moment(`${time.hour} ${time.amOrPm}`, "h A").format("HH");
@@ -43,11 +52,13 @@ const Form = ({ name, api, api_id, description, data }: FormProps) => {
     data: data,
   });
 
-  // const sendUserData = () => {
-  //   const response = trpc.useQuery(["weather.new-weather-cron", state]);
-  //   //handle errors here
-  //   return response;
-  // };
+  const sendUserData = (e: any) => {
+    e.preventDefault();
+    console.log("sending user data");
+    // const response = trpc.useQuery(["weather.new-weather-cron", state]);
+    // //handle errors here
+    // return response;
+  };
 
   useEffect(() => {
     getPosition()
@@ -78,10 +89,15 @@ const Form = ({ name, api, api_id, description, data }: FormProps) => {
   const [submitted, setSubmitted] = useState(false);
 
   return (
-    <div className="w max-w-s">
-      {user && (
-        <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-          <h1 className="m-4">New Text</h1>
+    <div className="w max-w-s flex-col justify-end" ref={parent}>
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        onClick={reveal}
+      >
+        New Text
+      </button>
+      {user && form && (
+        <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-5">
           <p>{description}</p>
           <br />
           <div className="mb-4">
@@ -217,6 +233,12 @@ const Form = ({ name, api, api_id, description, data }: FormProps) => {
               </div>
             ) : null}
           </div>
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            onClick={(e) => sendUserData(e)}
+          >
+            Submit
+          </button>
         </form>
       )}
     </div>

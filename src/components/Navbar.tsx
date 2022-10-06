@@ -16,7 +16,10 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="flex items-center justify-between flex-wrap bg-purple-500 p-6 w-full">
+      <nav
+        ref={parent}
+        className="flex items-center justify-between flex-wrap bg-purple-500 p-6 w-full"
+      >
         <div className=" lg:flex  flex-shrink-0 text-white mr-6">
           <Link href="/">
             <span className="font-semibold text-xl tracking-tight hover:cursor-pointer">
@@ -42,10 +45,7 @@ const Navbar = () => {
         <div className="hidden w-full block flex-grow lg:flex lg:items-center lg:w-auto">
           <div className="text-sm lg:flex-grow">
             <Link href="/weather">
-              <a
-                onClick={() => setShow(false)}
-                className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
-              >
+              <a className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
                 Weather
               </a>
             </Link>
@@ -80,7 +80,7 @@ const Navbar = () => {
         </div>
         {show && (
           <div className="w-full">
-            <div className="text-xl columns-1 text-right" ref={parent}>
+            <div className="text-xl columns-1 text-right">
               <Link href="/weather">
                 <a className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
                   Weather
