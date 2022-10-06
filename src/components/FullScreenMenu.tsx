@@ -1,44 +1,63 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import autoAnimate from "@formkit/auto-animate";
 
-const FullScreenMenu = () => {
+//create type for props
+
+type FullScreenMenuProps = {
+  props: any;
+};
+
+const FullScreenMenu = (props): FullScreenMenuProps => {
   const [showModal, setShowModal] = useState(false);
+  const parent = useRef(null);
+  useEffect(() => {
+    parent.current && autoAnimate(parent.current);
+  }, [parent]);
 
+  const reveal = () => {
+    setShowModal(!showModal);
+    props.onChildClick();
+  };
   return (
-    <>
-      <button
-        onClick={() => setShowModal(true)}
-        className="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white"
-      >
-        <svg
-          className="fill-current h-3 w-3"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
+    <div ref={parent}>
+      {!showModal && (
+        <button
+          onClick={reveal}
+          className="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white"
         >
-          <title>Menu</title>
-          <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
-        </svg>
-      </button>
-      {showModal ? (
-        <>
-          <div className="h-screen fixed inset-0 z-50 outline-none focus:outline-none">
-            <div className=" relative w-auto my-6 mx-auto max-w-3xl">
+          <svg
+            className="fill-current h-3 w-3"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <title>Menu</title>
+            <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+          </svg>
+        </button>
+      )}
+      {showModal && (
+        <div>
+          <div className="">
+            <div className="">
               {/*content*/}
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+              <div className="">
                 {/*header*/}
-                <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                  <h3 className="text-3xl font-semibold">Modal Title</h3>
+                <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t text-white">
+                  <h3 className="text-3xl font-semibold">Menu</h3>
                   <button
-                    className="p-1 ml-auto bg-transparent border-0 text-black  float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                    onClick={() => setShowModal(false)}
+                    className="p-1 ml-auto bg-transparent border-0 text-white  float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                    onClick={() => {
+                      setShowModal(false);
+                    }}
                   >
-                    <span className="bg-transparent text-black h-6 w-6 text-2xl block outline-none focus:outline-none">
-                      ×
+                    <span className="bg-transparent text-white h-6 w-6 text-2xl block outline-none focus:outline-none">
+                      X
                     </span>
                   </button>
                 </div>
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
-                  <p className="my-4 text-slate-500 text-lg leading-relaxed">
+                  <p className="my-4 text-white text-lg leading-relaxed">
                     I always felt like I could do anything. That’s the main
                     thing people are controlled by! Thoughts- their perception
                     of themselves! They're slowed down by their perception of
@@ -47,29 +66,13 @@ const FullScreenMenu = () => {
                   </p>
                 </div>
                 {/*footer*/}
-                <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-                  <button
-                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Close
-                  </button>
-                  <button
-                    className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Save Changes
-                  </button>
-                </div>
               </div>
             </div>
           </div>
-          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-        </>
-      ) : null}
-    </>
+          {/* <div className="opacity-25 fixed inset-0 z-40 bg-black"></div> */}
+        </div>
+      )}
+    </div>
   );
 };
 
