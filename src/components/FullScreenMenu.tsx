@@ -3,11 +3,7 @@ import autoAnimate from "@formkit/auto-animate";
 
 //create type for props
 
-type FullScreenMenuProps = {
-  props: any;
-};
-
-const FullScreenMenu = (props): FullScreenMenuProps => {
+const FullScreenMenu = () => {
   const [showModal, setShowModal] = useState(false);
   const parent = useRef(null);
   useEffect(() => {
@@ -16,7 +12,6 @@ const FullScreenMenu = (props): FullScreenMenuProps => {
 
   const reveal = () => {
     setShowModal(!showModal);
-    props.onChildClick();
   };
   return (
     <div ref={parent}>

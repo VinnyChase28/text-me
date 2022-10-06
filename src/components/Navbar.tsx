@@ -5,10 +5,6 @@ import FullScreenMenu from "./FullScreenMenu";
 
 const Navbar = () => {
   const user = supabase.auth.user();
-  const [showMenuButton, setShowMenuButton] = useState(false);
-  function clickAlert() {
-    setShowMenuButton(!showMenuButton);
-  }
   return (
     <>
       <nav className="flex items-center justify-between flex-wrap bg-teal-500 p-6">
@@ -30,7 +26,7 @@ const Navbar = () => {
           </span>
         </div>
         <div className="block lg:hidden">
-          <FullScreenMenu onChildClick={clickAlert} />
+          <FullScreenMenu />
         </div>
         <div className="hidden sm:visible md:visible w-full block flex-grow lg:flex lg:items-center lg:w-auto">
           <div className="text-sm lg:flex-grow">
