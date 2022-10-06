@@ -1,60 +1,59 @@
 import React from "react";
 import Link from "next/link";
 import { supabase } from "../utils/supabaseClient";
+import FullScreenMenu from "./FullScreenMenu";
 
 const Navbar = () => {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
   const user = supabase.auth.user();
   return (
     <>
-      <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-violet-500 ">
-        <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
-          <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
-            <Link href="/">
-              <a className="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white">
-                Text Me Stuff
-              </a>
-            </Link>
-            <button
-              className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
-              type="button"
-              onClick={() => setNavbarOpen(!navbarOpen)}
-            >
-              <i className="fas fa-bars"></i>
-            </button>
-          </div>
-          <div
-            className={
-              "lg:flex flex-grow items-center" +
-              (navbarOpen ? " flex" : " hidden")
-            }
-            id="example-navbar-danger"
+      <nav className="flex items-center justify-between flex-wrap bg-teal-500 p-6">
+        <div className="flex items-center flex-shrink-0 text-white mr-6">
+          <svg
+            className="fill-current h-8 w-8 mr-2"
+            width="54"
+            height="54"
+            viewBox="0 0 54 54"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
-              <li className="nav-item">
-                <Link href="/">
-                  <a className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75">
-                    <i className="fab fa-facebook-square text-lg leading-lg text-white opacity-75"></i>
-                    <span className="ml-2">Home</span>
-                  </a>
-                </Link>
-              </li>
-              <li className="nav-item">
-                {user ? (
-                  <Link href="/profile">
-                    <a className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75">
-                      <span className="ml-2">{user.phone}</span>
-                    </a>
-                  </Link>
-                ) : (
-                  <Link href="/auth">
-                    <a className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75">
-                      <span className="ml-2">Sign In</span>
-                    </a>
-                  </Link>
-                )}
-              </li>
-            </ul>
+            <path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z" />
+          </svg>
+          <span className="font-semibold text-xl tracking-tight">
+            Tailwind CSS
+          </span>
+        </div>
+        <div className="block lg:hidden">
+          <FullScreenMenu />
+        </div>
+        <div className="hidden sm:visible md:visible w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+          <div className="text-sm lg:flex-grow">
+            <a
+              href="#responsive-header"
+              className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+            >
+              Docs
+            </a>
+            <a
+              href="#responsive-header"
+              className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+            >
+              Examples
+            </a>
+            <a
+              href="#responsive-header"
+              className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white"
+            >
+              Blog
+            </a>
+          </div>
+          <div>
+            <a
+              href="#"
+              className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
+            >
+              +{user?.phone}
+            </a>
           </div>
         </div>
       </nav>

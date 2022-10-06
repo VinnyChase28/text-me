@@ -6,8 +6,11 @@ import Form from "../components/Form";
 import Banner from "../components/Banner";
 import WeatherCard from "../components/WeatherCard";
 import { getPosition } from "../utils/getPosition";
+import { supabase } from "../utils/supabaseClient";
+import Link from "next/link";
 
 const Weather: NextPage = () => {
+  const user = supabase.auth.user();
   //this variable makes a req to the get-weather route with a payload
   const [location, setLocation] = useState({ latitude: null, longitude: null });
   useEffect(() => {
@@ -91,7 +94,7 @@ const Weather: NextPage = () => {
             </div>
           )}
         </Banner>
-        {weather ? (
+        {weather && user ? (
           <Form
             name="Weather"
             api="weather"
@@ -100,7 +103,18 @@ const Weather: NextPage = () => {
             data={{}}
           />
         ) : (
-          <p>Waiting for weather data...</p>
+          <div>
+            {!weather ? <p>Waiting for weather data...</p> : null}
+            {!user ? (
+              <p>
+                Please{" "}
+                <Link href="/auth">
+                  <a className="underline">Sign In</a>
+                </Link>{" "}
+                to create a new text reminder
+              </p>
+            ) : null}
+          </div>
         )}
       </main>
     </>
