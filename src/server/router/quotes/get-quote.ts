@@ -11,7 +11,6 @@ export const quoteRouter: any = createRouter().query("get-quote", {
       .then((data) => {
         return data;
       });
-
     return {
       response: data,
     };

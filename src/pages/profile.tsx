@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react";
+import type { NextPage } from "next";
 import { supabase } from "../utils/supabaseClient";
 import { getPosition } from "../utils/getPosition";
+import { signOut } from "../utils/signOut";
+import { useRouter } from "next/router";
 
-export default function Profile() {
-  const user = supabase?.auth?.user();
+const Profile: NextPage = () => {
+  const user = supabase.auth.user();
+  const router = useRouter();
   const [location, setLocation] = useState({ latitude: null, longitude: null });
   useEffect(() => {
     getPosition()
@@ -68,6 +72,17 @@ export default function Profile() {
                   <h3 className="text-4xl font-semibold leading-normal mb-2 text-gray-800 mb-2">
                     {`+${user?.phone}`}
                   </h3>
+                  <button
+                    className="bg-pink-500 active:bg-pink-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1"
+                    type="button"
+                    style={{ transition: "all .15s ease" }}
+                    onClick={() => {
+                      signOut();
+                      router.push("/");
+                    }}
+                  >
+                    Sign Out
+                  </button>
                 </div>
                 <div className="mt-10 py-10 border-t border-gray-300 text-center">
                   <div className="flex flex-wrap justify-center">
@@ -96,4 +111,6 @@ export default function Profile() {
       </main>
     </>
   );
-}
+};
+
+export default Profile;

@@ -24,7 +24,6 @@ const VerifyOTP = (props: any) => {
       console.log(error);
     }
   };
-
   return (
     <div style={{ color: "black" }}>
       <h3>Verify OTP</h3>
