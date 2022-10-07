@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import type { NextPage } from "next";
-import Head from "next/head";
+import { supabase } from "../utils/supabaseClient";
 import { trpc } from "../utils/trpc";
+import { getPosition } from "../utils/getPosition";
+import Head from "next/head";
 import Form from "../components/Form";
 import Banner from "../components/Banner";
 import WeatherCard from "../components/WeatherCard";
-import { getPosition } from "../utils/getPosition";
-import { supabase } from "../utils/supabaseClient";
+
 import Link from "next/link";
 
 const Weather: NextPage = () => {

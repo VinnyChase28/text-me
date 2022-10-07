@@ -1,17 +1,17 @@
 import { useState, useRef, useEffect } from "react";
-import Link from "next/link";
 import { supabase } from "../utils/supabaseClient";
+import Link from "next/link";
 import autoAnimate from "@formkit/auto-animate";
 
 const Navbar = () => {
   const user = supabase.auth.user();
+
+  //animation
   const [show, setShow] = useState(false);
   const parent = useRef(null);
-
   useEffect(() => {
     parent.current && autoAnimate(parent.current);
   }, [parent]);
-
   const reveal = () => setShow(!show);
 
   return (

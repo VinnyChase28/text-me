@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import { supabase } from "../utils/supabaseClient";
 import { getPosition } from "../utils/getPosition";
 import { signOut } from "../utils/signOut";
-import { useRouter } from "next/router";
 
 const Profile: NextPage = () => {
   const user = supabase.auth.user();

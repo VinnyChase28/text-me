@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from "react";
 import { supabase } from "../utils/supabaseClient";
-import { trpc } from "../utils/trpc";
 import moment from "moment";
 import { getPosition } from "../utils/getPosition";
 import autoAnimate from "@formkit/auto-animate";
@@ -28,8 +27,11 @@ const Form = ({
   data,
   onSubmit,
 }: FormProps) => {
+  //get user and location
   const user = supabase.auth.user();
   const [location, setLocation] = useState({ latitude: null, longitude: null });
+
+  //open and close form animation
   const [form, showForm] = useState(false);
   const reveal = () => {
     showForm(!form);
@@ -38,11 +40,13 @@ const Form = ({
   useEffect(() => {
     parent.current && autoAnimate(parent.current);
   }, [parent]);
+
   //get user's time inputs, make sure in 24 hour format
   const [time, setTime] = useState<Time>({ hour: "9", amOrPm: "AM" });
   const time12 = moment(`${time.hour} ${time.amOrPm}`, "h A").format("HH");
   const time24 = moment(time12, ["h A"]).format("HH");
 
+  //set form state
   const [state, setState] = useState({
     text: "",
     city: "",
@@ -88,12 +92,10 @@ const Form = ({
 
   const handleSubmit = (e: any, state: any) => {
     e.preventDefault();
-    console.log("fired");
     onSubmit(state);
   };
 
   // async await is up to you
-
   return (
     <div className="w max-w-s flex-col" ref={parent}>
       <button

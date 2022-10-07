@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import type { NextPage } from "next";
-import Head from "next/head";
 import { trpc } from "../utils/trpc";
-import Card from "../components/Card";
 import { supabase } from "../utils/supabaseClient";
+import Head from "next/head";
+import Card from "../components/Card";
 
 const Home: NextPage = () => {
   const user = supabase?.auth?.user();

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { NextPage } from "next";
-import Head from "next/head";
 import { trpc } from "../utils/trpc";
+import Head from "next/head";
 import Form from "../components/Form";
 import Banner from "../components/Banner";
 
