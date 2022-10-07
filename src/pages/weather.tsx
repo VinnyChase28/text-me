@@ -59,6 +59,7 @@ const Weather: NextPage = () => {
 
   const onSubmit = (formState: any) => {
     console.log("from weather page", formState);
+    return formState;
   };
 
   // const mutation = trpc.useMutation(["weather.new-weather-cron"], {

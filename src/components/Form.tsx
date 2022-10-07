@@ -12,7 +12,7 @@ type FormProps = {
   description: string;
   api_id: number;
   data: object;
-  onClick: any;
+  onClick: Function;
 };
 
 type Time = {
@@ -21,6 +21,7 @@ type Time = {
 };
 
 const Form = ({ name, api, api_id, description, data, onClick }: FormProps) => {
+  console.log(onClick);
   const user = supabase.auth.user();
   const [location, setLocation] = useState({ latitude: null, longitude: null });
   const [form, showForm] = useState(false);
