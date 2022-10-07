@@ -64,7 +64,7 @@ const Weather: NextPage = () => {
 
   const getData = async (formState: any) => {
     newWeatherCron.mutate(formState);
-    console.log(newWeatherCron.data.message);
+    console.log(newWeatherCron?.data?.message ?? null);
   };
 
   return (
