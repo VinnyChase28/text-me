@@ -57,7 +57,7 @@ const Weather: NextPage = () => {
     }
   }, [weather?.data?.response]);
 
-  const onSubmit = (formState: any) => {
+  const getData = (formState: any) => {
     console.log("from weather page", formState);
     return formState;
   };
@@ -118,7 +118,7 @@ const Weather: NextPage = () => {
             api_id={1}
             description="Get weather reminders whenever you need them"
             data={weatherData}
-            onClick={onSubmit}
+            onSubmit={getData}
           />
         ) : (
           <div>
