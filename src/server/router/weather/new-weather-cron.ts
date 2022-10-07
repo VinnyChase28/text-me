@@ -4,6 +4,10 @@ import { supabase } from "../../../utils/supabaseClient";
 import { baseUrls } from "../../../utils/baseUrls";
 
 const easy_cron_token = process.env.NEXT_PUBLIC_EASY_CRON_KEY;
+type ErrorMessage = {
+  errorMessage: string;
+  isError: boolean;
+};
 
 export const weatherCronRouter: any = createRouter().mutation(
   "new-weather-cron",
@@ -25,7 +29,7 @@ export const weatherCronRouter: any = createRouter().mutation(
       })
       .nullish(),
     async resolve({ input }) {
-      let error = { errorMessage: "", isError: false };
+      let error: ErrorMessage = { errorMessage: "", isError: false };
       let cronExpression = "0 */5 * ? * *";
       const hour = input?.time;
       const day = input?.day;
@@ -46,6 +50,7 @@ export const weatherCronRouter: any = createRouter().mutation(
       //   };
       // }
 
+      error["isError"] = false;
       let cronEndpoint = `${baseUrls.cronAdd}?token=${easy_cron_token}&cron_expression=${cronExpression}&url=${baseUrls.newWeatherCron}&http_method=post&http_message_body=${body}&timezone_from=2&timezone=${timezone}&http_headers=Content-Type:application%2Fjson&cron_job_name=${input?.phone}`;
 
       const data = await fetch(`${cronEndpoint}`)
