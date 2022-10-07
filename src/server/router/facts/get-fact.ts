@@ -1,5 +1,4 @@
 import { createRouter } from "../context";
-import { z } from "zod";
 import { baseUrls } from "../../../utils/baseUrls";
 
 export const factRouter: any = createRouter().query("get-fact", {

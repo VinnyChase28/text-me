@@ -58,22 +58,12 @@ const Weather: NextPage = () => {
     }
   }, [weather?.data?.response]);
 
+  const newWeatherCron = trpc.useMutation(["weather.new-weather-cron"]);
+
   const getData = (formState: any) => {
     console.log("from weather page", formState);
-    return formState;
+    newWeatherCron.mutate(formState);
   };
-
-  // const mutation = trpc.useMutation(["weather.new-weather-cron"], {
-  //   // lat: location?.latitude,
-  //   // lon: location?.longitude,
-  // });
-
-  // const handleSubmit = async (e: any) => {
-  //   e.preventDefault();
-  //   console.log("submitting");
-  //   // const name = "John Doe";
-  //   // mutation.mutate({ name });
-  // };
 
   return (
     <>

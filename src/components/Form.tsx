@@ -42,7 +42,6 @@ const Form = ({ name, api, api_id, description, onSubmit }: FormProps) => {
   const [state, setState] = useState({
     name: "",
     text: "",
-    city: "",
     timezone: timezone,
     phone: user?.phone ?? "",
     occurrence: "daily",
