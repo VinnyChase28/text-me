@@ -25,14 +25,14 @@ export const weatherCronRouter: any = createRouter().mutation(
       })
       .nullish(),
     async resolve({ input }) {
-      let error = { errorMessage: "", isError: false };
+      // let error = { errorMessage: "", isError: false };
 
-      let cron_job_id = "4649809";
-      let cronExpression = "0 */5 * ? * *";
-      let hour = input?.time;
-      let day = input?.day;
-      let timezone = input?.timezone;
-      let body = JSON.stringify(input);
+      // let cron_job_id = "4649809";
+      // let cronExpression = "0 */5 * ? * *";
+      // let hour = input?.time;
+      // let day = input?.day;
+      // let timezone = input?.timezone;
+      // let body = JSON.stringify(input);
 
       // if (input?.occurrence == "daily") {
       //   cronExpression = `0 ${hour} * * *`;
@@ -48,25 +48,25 @@ export const weatherCronRouter: any = createRouter().mutation(
       //   };
       // }
 
-      let cronEndpoint = `${baseUrls.cronAdd}?token=${easy_cron_token}&cron_expression=${cronExpression}&url=${baseUrls.newWeatherCron}&http_method=post&http_message_body=${body}&timezone_from=2&timezone=${timezone}&id=${cron_job_id}&http_headers=Content-Type:application%2Fjson&cron_job_name=${input?.phone}`;
+      // let cronEndpoint = `${baseUrls.cronAdd}?token=${easy_cron_token}&cron_expression=${cronExpression}&url=${baseUrls.newWeatherCron}&http_method=post&http_message_body=${body}&timezone_from=2&timezone=${timezone}&id=${cron_job_id}&http_headers=Content-Type:application%2Fjson&cron_job_name=${input?.phone}`;
 
-      const data = await fetch(`${cronEndpoint}`)
-        .then((res) => {
-          console.log("res", res);
-          return res.json();
-        })
-        .then((data) => {
-          console.log("data", data);
-          return data;
-        });
+      // const data = await fetch(`${cronEndpoint}`)
+      //   .then((res) => {
+      //     console.log("res", res);
+      //     return res.json();
+      //   })
+      //   .then((data) => {
+      //     console.log("data", data);
+      //     return data;
+      //   });
 
-      console.log(data.cron_job_id);
+      // console.log(data.cron_job_id);
 
       const { data: supabaseData, error: supabaseError } = await supabase
         .from("phone_numbers")
         .upsert({
           phone_number: input?.phone,
-          weather: { settings: input, cron_job_id: data.cron_job_id },
+          weather: { settings: input, cron_job_id: "data.cron_job_id " },
         });
 
       return input;
