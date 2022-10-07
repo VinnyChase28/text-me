@@ -12,6 +12,7 @@ type FormProps = {
   description: string;
   api_id: number;
   data: object;
+  onSubmit: any;
 };
 
 type Time = {
@@ -19,14 +20,26 @@ type Time = {
   amOrPm: string;
 };
 
-const Form = ({ name, api, api_id, description, data }: FormProps) => {
+type SubmitProps = {
+  e: React.FormEvent<HTMLFormElement>;
+  state: any;
+  //set void props
+};
+
+const Form = ({
+  name,
+  api,
+  api_id,
+  description,
+  data,
+  onSubmit,
+}: FormProps) => {
   const user = supabase.auth.user();
   const [location, setLocation] = useState({ latitude: null, longitude: null });
   const [form, showForm] = useState(false);
   const reveal = () => {
     showForm(!form);
   };
-
   const parent = useRef(null);
   useEffect(() => {
     parent.current && autoAnimate(parent.current);
@@ -51,22 +64,15 @@ const Form = ({ name, api, api_id, description, data }: FormProps) => {
     longitude: location?.longitude,
     data: data,
   });
-
-  const sendUserData = (e: any) => {
-    e.preventDefault();
-    console.log("sending user data");
-    // const response = trpc.useQuery(["weather.new-weather-cron", state]);
-    // //handle errors here
-    // return response;
-  };
+  const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     getPosition()
       .then((position: any) => {
         setLocation({
           ...location,
-          latitude: position?.coords?.latitude.toString(),
-          longitude: position?.coords?.longitude.toString(),
+          latitude: position?.coords?.latitude,
+          longitude: position?.coords?.longitude,
         });
       })
       .catch((error) => {
@@ -86,18 +92,24 @@ const Form = ({ name, api, api_id, description, data }: FormProps) => {
     setState({ ...state, time: time24 });
   }, [time]);
 
-  const [submitted, setSubmitted] = useState(false);
+  const handleSubmit = (e: any, state: any) => {
+    e.preventDefault();
+    console.log("fired");
+    onSubmit(state);
+  };
+
+  // async await is up to you
 
   return (
-    <div className="w max-w-s flex-col justify-end" ref={parent}>
+    <div className="w max-w-s flex-col" ref={parent}>
       <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right"
         onClick={reveal}
       >
         New Text
       </button>
       {user && form && (
-        <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-5">
+        <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-12">
           <p>{description}</p>
           <br />
           <div className="mb-4">
@@ -235,7 +247,9 @@ const Form = ({ name, api, api_id, description, data }: FormProps) => {
           </div>
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick={(e) => sendUserData(e)}
+            onClick={(e) => {
+              handleSubmit(e, state);
+            }}
           >
             Submit
           </button>
