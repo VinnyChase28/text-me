@@ -14,8 +14,12 @@ const Facts: NextPage = () => {
     if (factData?.data?.response) {
       setFact(factData?.data?.response.text);
     }
-    console.log(fact);
   }, [factData?.data?.response]);
+
+  const getData = (formState: any) => {
+    console.log("from facts page", formState);
+    return formState;
+  };
 
   return (
     <>
@@ -63,7 +67,7 @@ const Facts: NextPage = () => {
           api="weather"
           api_id={3}
           description="Get totally useless facts you can share with your friends"
-          data={{}}
+          onSubmit={getData}
         />
       </main>
     </>

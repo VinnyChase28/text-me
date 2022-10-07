@@ -19,7 +19,7 @@ const Home: NextPage = () => {
         <h1 className="text-5xl md:text-[5rem] leading-normal font-extrabold text-gray-700">
           Text <span className="text-purple-300">Me</span> Stuff
         </h1>
-        <p className="text-2xl text-gray-700">
+        <p className="text-2xl text-gray-700 text-center p-6">
           {user ? "Welcome back! " : "Welcome! "}
           Text Me Stuff allows you to get useful text message reminders either
           daily or weekly on specified days of the week:

@@ -10,7 +10,6 @@ type FormProps = {
   api: string;
   description: string;
   api_id: number;
-  data: object;
   onSubmit?: any;
 };
 
@@ -19,14 +18,7 @@ type Time = {
   amOrPm: string;
 };
 
-const Form = ({
-  name,
-  api,
-  api_id,
-  description,
-  data,
-  onSubmit,
-}: FormProps) => {
+const Form = ({ name, api, api_id, description, onSubmit }: FormProps) => {
   //get user and location
   const user = supabase.auth.user();
   const [location, setLocation] = useState({ latitude: null, longitude: null });
@@ -48,6 +40,7 @@ const Form = ({
 
   //set form state
   const [state, setState] = useState({
+    name: "",
     text: "",
     city: "",
     timezone: timezone,
@@ -60,7 +53,6 @@ const Form = ({
     api_active: true,
     latitude: location?.latitude,
     longitude: location?.longitude,
-    data: data,
   });
   const [submitted, setSubmitted] = useState(false);
 
@@ -97,9 +89,10 @@ const Form = ({
 
   // async await is up to you
   return (
-    <div className="w max-w-s flex-col" ref={parent}>
+    <div className="max-w-s flex-col" ref={parent}>
       <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right"
+        //center the button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         onClick={reveal}
       >
         New Text
@@ -133,6 +126,22 @@ const Form = ({
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="username"
             >
+              Name
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="phone"
+              type="text"
+              value={state.name}
+              placeholder="Enter your name"
+              onChange={(e) => setState({ ...state, name: e.target.value })}
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="username"
+            >
               Custom Message
             </label>
             <input
@@ -140,7 +149,7 @@ const Form = ({
               id="phone"
               type="text"
               value={state.text}
-              placeholder="Enter a few words here"
+              placeholder="Optional message"
               onChange={(e) => setState({ ...state, text: e.target.value })}
             />
           </div>
