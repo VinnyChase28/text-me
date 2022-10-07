@@ -58,10 +58,11 @@ const Weather: NextPage = () => {
     }
   }, [weather?.data?.response]);
 
+  //create a new weather cron
+
   const newWeatherCron = trpc.useMutation(["weather.new-weather-cron"]);
 
   const getData = (formState: any) => {
-    console.log("from weather page", formState);
     newWeatherCron.mutate(formState);
   };
 
