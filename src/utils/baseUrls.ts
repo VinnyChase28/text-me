@@ -5,6 +5,7 @@ export const baseUrls = {
   quote: "https://api.fisenko.net/v1/quotes/en/random",
   uselessFacts: "https://uselessfacts.jsph.pl/random.json?language=en",
   cronAdd: "https://www.easycron.com/rest/add",
-  newWeatherCron:
-    "https%3A%2F%2Ftext-me-rouge.vercel.app%2Fapi%2Ftrpc%2Fweather.new-weather-cron",
+  newWeatherCron: encodeURI(
+    "https://text-me-rouge.vercel.app/api/trpc/weather.new-weather-cron"
+  ),
 };
