@@ -1,10 +1,12 @@
 import { useState, useRef, useEffect } from "react";
 import { supabase } from "../utils/supabaseClient";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import autoAnimate from "@formkit/auto-animate";
 
 const Navbar = () => {
   const user = supabase.auth.user();
+  const router = useRouter();
 
   //animation
   const [show, setShow] = useState(false);
@@ -79,35 +81,56 @@ const Navbar = () => {
           )}
         </div>
         {show && (
-          <div className="w-full">
-            <div className="text-xl columns-1 text-right">
-              <Link href="/weather">
-                <a className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
-                  Weather
-                </a>
-              </Link>
-              <Link href="/quotes">
-                <a className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
-                  Quotes
-                </a>
-              </Link>
-              <Link href="/facts">
-                <a className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
-                  Facts
-                </a>
-              </Link>
+          <div className="flex w-full h-screen text-center">
+            <div className="text-5xl m-auto">
+              <a
+                onClick={() => {
+                  setShow(false);
+                  router.push("/weather");
+                }}
+                className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 hover: cursor-pointer"
+              >
+                Weather
+              </a>
+
+              <a
+                onClick={() => {
+                  setShow(false);
+                  router.push("/weather");
+                }}
+                className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 hover: cursor-pointer"
+              >
+                Quotes
+              </a>
+              <a
+                onClick={() => {
+                  setShow(false);
+                  router.push("/quotes");
+                }}
+                className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 hover: cursor-pointer"
+              >
+                Facts
+              </a>
               {user ? (
-                <Link href="/profile">
-                  <a className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
-                    Profile
-                  </a>
-                </Link>
+                <a
+                  onClick={() => {
+                    setShow(false);
+                    router.push("/profile");
+                  }}
+                  className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 hover: cursor-pointer"
+                >
+                  Profile
+                </a>
               ) : (
-                <Link href="/auth">
-                  <a className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
-                    Sign In
-                  </a>
-                </Link>
+                <a
+                  onClick={() => {
+                    setShow(false);
+                    router.push("/auth");
+                  }}
+                  className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 hover: cursor-pointer"
+                >
+                  Sign In
+                </a>
               )}
             </div>
           </div>
