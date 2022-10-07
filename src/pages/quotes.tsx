@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import type { NextPage } from "next";
 import { trpc } from "../utils/trpc";
+import { supabase } from "../utils/supabaseClient";
+import Link from "next/link";
 import Head from "next/head";
 import Form from "../components/Form";
 import Banner from "../components/Banner";
 
 const Quotes: NextPage = () => {
+  const user = supabase?.auth?.user();
   //this variable makes a req to the get-weather route with a payload
   const quoteData = trpc.useQuery(["quotes.get-quote"]);
   const [quote, setQuote] = useState({ saying: "", author: "" });
@@ -68,13 +71,28 @@ const Quotes: NextPage = () => {
           </figure>
         </Banner>
 
-        <Form
-          name="Quotes"
-          api="quotes"
-          api_id={2}
-          description="Get inspirational quotes whenever you need them"
-          onSubmit={getData}
-        />
+        {quoteData && user ? (
+          <Form
+            name="Quotes"
+            api="quotes"
+            api_id={2}
+            description="Get Quotes"
+            onSubmit={getData}
+          />
+        ) : (
+          <div>
+            {!quoteData ? <p>Waiting for quotes data...</p> : null}
+            {!user ? (
+              <p>
+                Please{" "}
+                <Link href="/auth">
+                  <a className="underline">Sign In</a>
+                </Link>{" "}
+                to create a new text reminder
+              </p>
+            ) : null}
+          </div>
+        )}
       </main>
     </>
   );
