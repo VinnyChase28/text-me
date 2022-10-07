@@ -96,7 +96,7 @@ const Navbar = () => {
               <a
                 onClick={() => {
                   setShow(false);
-                  router.push("/weather");
+                  router.push("/quotes");
                 }}
                 className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 hover: cursor-pointer"
               >
@@ -105,7 +105,7 @@ const Navbar = () => {
               <a
                 onClick={() => {
                   setShow(false);
-                  router.push("/quotes");
+                  router.push("/facts");
                 }}
                 className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 hover: cursor-pointer"
               >
