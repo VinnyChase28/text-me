@@ -22,14 +22,14 @@ const Navbar = () => {
         ref={parent}
         className="flex items-center justify-between flex-wrap bg-purple-500 p-6 w-full"
       >
-        <div className=" lg:flex  flex-shrink-0 text-white mr-6">
+        <div className="md:flex flex-shrink-0 text-white mr-6">
           <Link href="/">
             <span className="font-semibold text-xl tracking-tight hover:cursor-pointer">
               Text Me Stuff
             </span>
           </Link>
         </div>
-        <div className="lg:hidden ml-auto">
+        <div className="md:hidden ml-auto">
           <button
             onClick={reveal}
             className="flex items-center px-3 py-2 border rounded text-white border-white hover:text-white hover:border-white "
@@ -44,20 +44,20 @@ const Navbar = () => {
             </svg>
           </button>
         </div>
-        <div className="hidden w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-          <div className="text-sm lg:flex-grow">
+        <div className="hidden w-full block flex-grow md:flex md:items-center md:w-auto">
+          <div className="text-sm md:flex-grow">
             <Link href="/weather">
-              <a className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
+              <a className="block mt-4 md:inline-block md:mt-0 text-white hover:text-white mr-4">
                 Weather
               </a>
             </Link>
             <Link href="/quotes">
-              <a className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
+              <a className="block mt-4 md:inline-block md:mt-0 text-white hover:text-white mr-4">
                 Quotes
               </a>
             </Link>
             <Link href="/facts">
-              <a className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
+              <a className="block mt-4 md:inline-block md:mt-0 text-white hover:text-white mr-4">
                 Facts
               </a>
             </Link>
@@ -65,7 +65,7 @@ const Navbar = () => {
           {user ? (
             <div>
               <Link href="/profile">
-                <a className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">
+                <a className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 md:mt-0">
                   Profile
                 </a>
               </Link>
@@ -73,7 +73,7 @@ const Navbar = () => {
           ) : (
             <div>
               <Link href="/auth">
-                <a className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">
+                <a className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 md:mt-0">
                   Sign In
                 </a>
               </Link>
@@ -81,14 +81,14 @@ const Navbar = () => {
           )}
         </div>
         {show && (
-          <div className="flex w-full h-screen text-center">
+          <div className="md:hidden flex w-full h-screen text-center">
             <div className="text-5xl m-auto">
               <a
                 onClick={() => {
                   setShow(false);
                   router.push("/weather");
                 }}
-                className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 hover: cursor-pointer"
+                className="block mt-4 md:inline-block md:mt-0 text-white hover:text-white mr-4 hover: cursor-pointer"
               >
                 Weather
               </a>
@@ -98,7 +98,7 @@ const Navbar = () => {
                   setShow(false);
                   router.push("/quotes");
                 }}
-                className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 hover: cursor-pointer"
+                className="block mt-4 md:inline-block md:mt-0 text-white hover:text-white mr-4 hover: cursor-pointer"
               >
                 Quotes
               </a>
@@ -107,7 +107,7 @@ const Navbar = () => {
                   setShow(false);
                   router.push("/facts");
                 }}
-                className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 hover: cursor-pointer"
+                className="block mt-4 md:inline-block md:mt-0 text-white hover:text-white mr-4 hover: cursor-pointer"
               >
                 Facts
               </a>
@@ -117,7 +117,7 @@ const Navbar = () => {
                     setShow(false);
                     router.push("/profile");
                   }}
-                  className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 hover: cursor-pointer"
+                  className="block mt-4 md:inline-block md:mt-0 text-white hover:text-white mr-4 hover: cursor-pointer"
                 >
                   Profile
                 </a>
@@ -127,7 +127,7 @@ const Navbar = () => {
                     setShow(false);
                     router.push("/auth");
                   }}
-                  className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 hover: cursor-pointer"
+                  className="block mt-4 md:inline-block md:mt-0 text-white hover:text-white mr-4 hover: cursor-pointer"
                 >
                   Sign In
                 </a>
