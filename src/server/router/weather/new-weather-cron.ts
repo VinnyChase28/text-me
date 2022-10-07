@@ -26,26 +26,25 @@ export const weatherCronRouter: any = createRouter().mutation(
       .nullish(),
     async resolve({ input }) {
       let error = { errorMessage: "", isError: false };
-
       let cronExpression = "0 */5 * ? * *";
-      let hour = input?.time;
-      let day = input?.day;
-      let timezone = input?.timezone;
-      let body = JSON.stringify(input);
+      const hour = input?.time;
+      const day = input?.day;
+      const timezone = input?.timezone;
+      const body = JSON.stringify(input);
 
-      if (input?.occurrence == "daily") {
-        cronExpression = `0 ${hour} * * *`;
-      } else if (input?.occurrence == "weekly") {
-        cronExpression = `0 ${hour} * * ${day}`;
-      } else {
-        error = {
-          errorMessage: "occurrence is not valid",
-          isError: true,
-        };
-        return {
-          response: error,
-        };
-      }
+      // if (input?.occurrence == "daily") {
+      //   cronExpression = `0 ${hour} * * *`;
+      // } else if (input?.occurrence == "weekly") {
+      //   cronExpression = `0 ${hour} * * ${day}`;
+      // } else {
+      //   error = {
+      //     errorMessage: "occurrence is not valid",
+      //     isError: true,
+      //   };
+      //   return {
+      //     response: error,
+      //   };
+      // }
 
       let cronEndpoint = `${baseUrls.cronAdd}?token=${easy_cron_token}&cron_expression=${cronExpression}&url=${baseUrls.newWeatherCron}&http_method=post&http_message_body=${body}&timezone_from=2&timezone=${timezone}&http_headers=Content-Type:application%2Fjson&cron_job_name=${input?.phone}`;
 
