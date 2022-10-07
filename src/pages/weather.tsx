@@ -117,7 +117,7 @@ const Weather: NextPage = () => {
             api_id={1}
             description="Get weather reminders whenever you need them"
             data={weatherData}
-            onSubmit={onSubmit}
+            onClick={onSubmit}
           />
         ) : (
           <div>

@@ -12,7 +12,7 @@ type FormProps = {
   description: string;
   api_id: number;
   data: object;
-  onSubmit: any;
+  onClick: any;
 };
 
 type Time = {
@@ -20,20 +20,7 @@ type Time = {
   amOrPm: string;
 };
 
-type SubmitProps = {
-  e: React.FormEvent<HTMLFormElement>;
-  state: any;
-  //set void props
-};
-
-const Form = ({
-  name,
-  api,
-  api_id,
-  description,
-  data,
-  onSubmit,
-}: FormProps) => {
+const Form = ({ name, api, api_id, description, data, onClick }: FormProps) => {
   const user = supabase.auth.user();
   const [location, setLocation] = useState({ latitude: null, longitude: null });
   const [form, showForm] = useState(false);
@@ -95,7 +82,7 @@ const Form = ({
   const handleSubmit = (e: any, state: any) => {
     e.preventDefault();
     console.log("fired");
-    onSubmit(state);
+    onClick(state);
   };
 
   // async await is up to you
