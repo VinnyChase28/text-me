@@ -57,6 +57,10 @@ const Weather: NextPage = () => {
     }
   }, [weather?.data?.response]);
 
+  const onSubmit = (formState: any) => {
+    console.log("from weather page", formState);
+  };
+
   // const mutation = trpc.useMutation(["weather.new-weather-cron"], {
   //   // lat: location?.latitude,
   //   // lon: location?.longitude,
@@ -68,10 +72,6 @@ const Weather: NextPage = () => {
   //   // const name = "John Doe";
   //   // mutation.mutate({ name });
   // };
-
-  const getData = (formState: any) => {
-    console.log("from weather page", formState);
-  };
 
   return (
     <>
@@ -117,7 +117,7 @@ const Weather: NextPage = () => {
             api_id={1}
             description="Get weather reminders whenever you need them"
             data={weatherData}
-            onSubmit={getData}
+            onSubmit={onSubmit}
           />
         ) : (
           <div>
