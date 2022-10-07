@@ -1,6 +1,9 @@
 import { createRouter } from "../context";
 import { z } from "zod";
 import { supabase } from "../../../utils/supabaseClient";
+import { baseUrls } from "../../../utils/baseUrls";
+
+const easy_cron_token = process.env.NEXT_PUBLIC_EASY_CRON_KEY;
 
 export const weatherCronRouter: any = createRouter().mutation(
   "new-weather-cron",
@@ -22,13 +25,50 @@ export const weatherCronRouter: any = createRouter().mutation(
       })
       .nullish(),
     async resolve({ input }) {
+      let error = { errorMessage: "", isError: false };
 
-      //1. UPSERT data by api type and phone number
-      const { data, error } = await supabase
+      let cron_job_id = "4649809";
+      let cronExpression = "0 */5 * ? * *";
+      let hour = input?.time;
+      let day = input?.day;
+      let timezone = input?.timezone;
+      let body = JSON.stringify(input);
+
+      // if (input?.occurrence == "daily") {
+      //   cronExpression = `0 ${hour} * * *`;
+      // } else if (input?.occurrence == "weekly") {
+      //   cronExpression = `0 ${hour} * * ${day}`;
+      // } else {
+      //   error = {
+      //     errorMessage: "occurrence is not valid",
+      //     isError: true,
+      //   };
+      //   return {
+      //     response: error,
+      //   };
+      // }
+
+      let cronEndpoint = `${baseUrls.cronAdd}?token=${easy_cron_token}&cron_expression=${cronExpression}&url=${baseUrls.newWeatherCron}&http_method=post&http_message_body=${body}&timezone_from=2&timezone=${timezone}&id=${cron_job_id}&http_headers=Content-Type:application%2Fjson&cron_job_name=${input?.phone}`;
+
+      const data = await fetch(`${cronEndpoint}`)
+        .then((res) => {
+          console.log("res", res);
+          return res.json();
+        })
+        .then((data) => {
+          console.log("data", data);
+          return data;
+        });
+
+      console.log(data.cron_job_id);
+
+      const { data: supabaseData, error: supabaseError } = await supabase
         .from("phone_numbers")
-        .upsert({ phone_number: input?.phone, weather: input })
+        .upsert({
+          phone_number: input?.phone,
+          weather: { settings: input, cron_job_id: data.cron_job_id },
+        });
 
-      //2. if weather is already set, update the cron in supabase
       return input;
     },
   }
