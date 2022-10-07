@@ -78,6 +78,7 @@ const Quotes: NextPage = () => {
             api_id={2}
             description="Get Quotes"
             onSubmit={getData}
+            disabled={false}
           />
         ) : (
           <div>

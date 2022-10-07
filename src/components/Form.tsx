@@ -11,6 +11,7 @@ type FormProps = {
   description: string;
   api_id: number;
   onSubmit?: any;
+  disabled: boolean;
 };
 
 type Time = {
@@ -18,7 +19,14 @@ type Time = {
   amOrPm: string;
 };
 
-const Form = ({ name, api, api_id, description, onSubmit }: FormProps) => {
+const Form = ({
+  name,
+  api,
+  api_id,
+  description,
+  onSubmit,
+  disabled,
+}: FormProps) => {
   //get user and location
   const user = supabase.auth.user();
   const [location, setLocation] = useState({ latitude: null, longitude: null });
@@ -251,6 +259,7 @@ const Form = ({ name, api, api_id, description, onSubmit }: FormProps) => {
           </div>
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            disabled={disabled}
             onClick={(e) => {
               handleSubmit(e, state);
             }}

@@ -28,14 +28,13 @@ export const weatherCronRouter: any = createRouter().mutation(
         longitude: z.number(),
       })
       .nullish(),
-    async resolve({ input }) {
+    resolve: async ({ input }) => {
       const error: ErrorMessage = { errorMessage: "", isError: false };
       const cronExpression = "0 */5 * ? * *";
       const hour = input?.time;
       const day = input?.day;
       const timezone = input?.timezone;
       const body = JSON.stringify(input);
-      console.log(input);
 
       // if (input?.occurrence == "daily") {
       //   cronExpression = `0 ${hour} * * *`;
@@ -56,11 +55,9 @@ export const weatherCronRouter: any = createRouter().mutation(
 
       const data = await fetch(`${cronEndpoint}`)
         .then((res) => {
-          console.log("res", res);
           return res.json();
         })
         .then((data) => {
-          console.log("data", data);
           return data;
         });
 
@@ -71,7 +68,7 @@ export const weatherCronRouter: any = createRouter().mutation(
           weather: { settings: input, cron_job_id: data?.cron_job_id },
         });
 
-      return input;
+      return { message: input };
     },
   }
 );

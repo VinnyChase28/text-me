@@ -62,9 +62,9 @@ const Weather: NextPage = () => {
 
   const newWeatherCron = trpc.useMutation(["weather.new-weather-cron"]);
 
-  const getData = (formState: any) => {
-    const data = newWeatherCron.mutate(formState);
-    console.log(data);
+  const getData = async (formState: any) => {
+    newWeatherCron.mutate(formState);
+    console.log(newWeatherCron.data.message);
   };
 
   return (
@@ -111,6 +111,7 @@ const Weather: NextPage = () => {
             api_id={1}
             description="Get weather reminders whenever you need them"
             onSubmit={getData}
+            disabled={newWeatherCron.isLoading}
           />
         ) : (
           <div>
