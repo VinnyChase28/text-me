@@ -35,6 +35,7 @@ export const weatherCronRouter: any = createRouter().mutation(
       const day = input?.day;
       const timezone = input?.timezone;
       const body = JSON.stringify(input);
+      console.log(input);
 
       // if (input?.occurrence == "daily") {
       //   cronExpression = `0 ${hour} * * *`;
