@@ -70,7 +70,7 @@ const Quotes: NextPage = () => {
           api_id={2}
           description="Get inspirational quotes whenever you need them"
           data={{}}
-          onSubmit={() => {}}
+          onSubmit={"test"}
         />
       </main>
     </>
