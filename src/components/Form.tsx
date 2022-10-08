@@ -195,6 +195,7 @@ const Form = ({
                 <select
                   name="hours"
                   className="bg-transparent text-xl appearance-none outline-none hover:cursor-pointer"
+                  defaultValue="9"
                   onChange={(e) => {
                     setTime({ ...time, hour: e.target.value });
                   }}

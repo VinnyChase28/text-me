@@ -12,6 +12,9 @@ import Link from "next/link";
 
 const Weather: NextPage = () => {
   const user = supabase.auth.user();
+
+  //TODO: check if user has a cron going for weather, and if so disable form and push them towards the profile page.
+
   //this variable makes a req to the get-weather route with a payload
   const [location, setLocation] = useState({ latitude: null, longitude: null });
   useEffect(() => {
@@ -47,24 +50,25 @@ const Weather: NextPage = () => {
     if (weather?.data?.response) {
       setWeatherData({
         ...weatherData,
-        sky: weather?.data?.response.weather[0]?.description,
-        temp: weather?.data?.response.main.temp,
-        feelsLike: weather?.data?.response.main.feels_like,
-        minTemp: weather?.data?.response.main.temp_min,
-        maxTemp: weather?.data?.response.main.temp_max,
-        country: weather?.data?.response.sys.country,
-        name: weather?.data?.response.name,
+        sky: weather?.data?.response?.weather[0]?.description,
+        temp: weather?.data?.response?.main?.temp,
+        feelsLike: weather?.data?.response?.main?.feels_like,
+        minTemp: weather?.data?.response?.main?.temp_min,
+        maxTemp: weather?.data?.response?.main?.temp_max,
+        country: weather?.data?.response?.sys?.country,
+        name: weather?.data?.response?.name,
       });
     }
   }, [weather?.data?.response]);
 
   //create a new weather cron
-
   const newWeatherCron = trpc.useMutation(["weather.new-weather-cron"]);
 
+  let isSuccess = false;
   const getData = async (formState: any) => {
     newWeatherCron.mutate(formState);
-    console.log(newWeatherCron?.data?.message ?? null);
+    isSuccess = newWeatherCron.isSuccess;
+    console.log(newWeatherCron ?? null);
   };
 
   return (
@@ -104,7 +108,7 @@ const Weather: NextPage = () => {
             </div>
           )}
         </Banner>
-        {weather && user ? (
+        {weather && user && !isSuccess ? (
           <Form
             name="Weather"
             api="weather"
