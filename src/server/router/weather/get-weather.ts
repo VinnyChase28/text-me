@@ -3,8 +3,9 @@ import { z } from "zod";
 import { baseUrls } from "../../../utils/baseUrls";
 const weatherApiKey = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
 
+//this route will simply retreive weather data based on user location
+
 export const weatherRouter = createRouter().query("get-weather", {
-  //this is the input provided by the client
   input: z
     .object({
       lat: z.number().nullish(),

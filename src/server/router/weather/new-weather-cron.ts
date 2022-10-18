@@ -3,6 +3,8 @@ import { z } from "zod";
 import { supabase } from "../../../utils/supabaseClient";
 import { baseUrls } from "../../../utils/baseUrls";
 
+//this route will create a new cron job with the user preferences.
+
 const easy_cron_token = process.env.NEXT_PUBLIC_EASY_CRON_KEY;
 type ErrorMessage = {
   errorMessage: string;
@@ -30,7 +32,7 @@ export const weatherCronRouter: any = createRouter().mutation(
       .nullish(),
     resolve: async ({ input }) => {
       const error: ErrorMessage = { errorMessage: "", isError: false };
-      const cronExpression = "0 */5 * ? * *";
+      const cronExpression = "*/5 * * * *";
       const hour = input?.time;
       const day = input?.day;
       const timezone = input?.timezone;

@@ -5,16 +5,18 @@ import { supabase } from "../utils/supabaseClient";
 const VerifyOTP = (props: any) => {
   const [token, setToken] = useState("");
   const { push } = useRouter();
-  const phone: any = props.phone;
+  const phone: string = props.phone;
   const [user, setUser] = useState();
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    const { user, error } = await supabase.auth.verifyOTP({
+    const { user: userVerify, error } = await supabase.auth.verifyOTP({
       phone,
       token,
       type: "sms",
     });
+
+    console.log(userVerify);
 
     if (!error) {
       const user = supabase.auth.user();
