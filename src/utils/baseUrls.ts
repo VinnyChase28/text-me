@@ -6,6 +6,6 @@ export const baseUrls = {
   uselessFacts: "https://uselessfacts.jsph.pl/random.json?language=en",
   cronAdd: "https://www.easycron.com/rest/add",
   newWeatherCron: encodeURI(
-    "https://text-me-rouge.vercel.app/api/trpc/weather.new-weather-cron"
+    "https://text-me-rouge.vercel.app/api/weather/trigger-weather-text"
   ),
 };
