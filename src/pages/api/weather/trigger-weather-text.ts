@@ -40,5 +40,7 @@ export default async function handler(
       console.error("Got an error:", e.code, e.message);
     });
 
+  console.log("After Twilio call");
+
   res.status(200).json(_req.body);
 }
