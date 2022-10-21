@@ -35,7 +35,7 @@ export default async function handler(
       to: _req.body.phone,
       body: `Hello ${_req.body.name}!\n\n${_req.body.text}\n\n${weatherText}`,
     })
-    .then((message) => console.log(message));
+    .then((message) => console.log(message.sid));
 
   res.status(200).json(_req.body);
 }
