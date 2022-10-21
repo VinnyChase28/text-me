@@ -32,10 +32,10 @@ export default async function handler(
   client.messages
     .create({
       from: twilioNumber,
-      to: "+12369995843",
+      to: _req.body.phone,
       body: `Hello ${_req.body.name}!\n\n${_req.body.text}\n\n${weatherText}`,
     })
-    .then((message) => console.log(message.sid));
+    .then((message) => console.log(message));
 
   res.status(200).json(_req.body);
 }
