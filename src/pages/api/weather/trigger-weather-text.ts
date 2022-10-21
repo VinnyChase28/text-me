@@ -35,7 +35,10 @@ export default async function handler(
       to: _req.body.phone,
       body: `Hello ${_req.body.name}!\n\n${_req.body.text}\n\n${weatherText}`,
     })
-    .then((message) => console.log(message.sid));
+    .then((message) => console.log(message.sid))
+    .catch((e) => {
+      console.error("Got an error:", e.code, e.message);
+    });
 
   res.status(200).json(_req.body);
 }
