@@ -22,12 +22,13 @@ export default async function handler(
       return data;
     });
 
-  console.log(data);
+  console.log("BODY:",_req.body);
   //create weather data variables
   const description = data.weather[0].description;
   const temp = data.main.temp;
   const feelsLike = data.main.feels_like;
   const weatherText = `The weather is ${description} and the temperature is ${temp} degrees. It feels like ${feelsLike} degrees.`;
+
 
   client.messages
     .create({
