@@ -19,8 +19,8 @@ const Quotes: NextPage = () => {
   useEffect(() => {
     if (quoteData?.data?.response) {
       setQuote({
-        saying: quoteData?.data?.response.text,
-        author: quoteData?.data?.response?.author?.name,
+        saying: quoteData?.data?.response?.content,
+        author: quoteData?.data?.response?.author,
       });
     }
   }, [quoteData?.data?.response]);
