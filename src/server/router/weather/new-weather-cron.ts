@@ -33,13 +33,19 @@ export const weatherCronRouter: any = createRouter().mutation(
     resolve: async ({ input }) => {
       let error: ErrorMessage = { errorMessage: "", isError: false };
       let cronExpression = "";
-      const hour = input?.time;
+      let hour = input?.time;
+      //remove the first 0 from hour
+      if (hour?.startsWith("0")) {
+        hour = hour?.substring(1);
+      }
+      console.log(hour);
       const day = input?.day;
       const timezone = input?.timezone;
       const body = JSON.stringify(input);
 
       if (input?.occurrence == "daily") {
         cronExpression = `0 ${hour} * * *`;
+        //cron every 24 hours at {hour}
       } else if (input?.occurrence == "weekly") {
         cronExpression = `0 ${hour} * * ${day}`;
       } else {
