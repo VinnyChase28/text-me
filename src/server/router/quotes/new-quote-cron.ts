@@ -11,8 +11,8 @@ type ErrorMessage = {
   isError: boolean;
 };
 
-export const weatherCronRouter: any = createRouter().mutation(
-  "new-weather-cron",
+export const quoteCronRouter: any = createRouter().mutation(
+  "new-quote-cron",
   {
     input: z
       .object({
@@ -59,7 +59,8 @@ export const weatherCronRouter: any = createRouter().mutation(
       }
 
       error["isError"] = false;
-      const cronEndpoint = `${baseUrls.cronAdd}?token=${easy_cron_token}&cron_expression=${cronExpression}&url=${baseUrls.newWeatherCron}&http_method=post&http_message_body=${body}&timezone_from=2&timezone=${timezone}&http_headers=Content-Type:application%2Fjson&cron_job_name=${input?.phone}`;
+      //get quotes url endpoint
+      const cronEndpoint = `${baseUrls.cronAdd}?token=${easy_cron_token}&cron_expression=${cronExpression}&url=${baseUrls.quote}&http_method=post&http_message_body=${body}&timezone_from=2&timezone=${timezone}&http_headers=Content-Type:application%2Fjson&cron_job_name=${input?.phone}`;
 
       const data = await fetch(`${cronEndpoint}`)
         .then((res) => {

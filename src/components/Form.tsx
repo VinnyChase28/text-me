@@ -61,6 +61,11 @@ const Form = ({
     latitude: location?.latitude,
     longitude: location?.longitude,
   });
+
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
+
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {

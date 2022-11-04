@@ -6,6 +6,7 @@ import Link from "next/link";
 import Head from "next/head";
 import Form from "../components/Form";
 import Banner from "../components/Banner";
+//import new quote cron
 
 const Quotes: NextPage = () => {
   const user = supabase?.auth?.user();
@@ -24,9 +25,14 @@ const Quotes: NextPage = () => {
     }
   }, [quoteData?.data?.response]);
 
-  const getData = (formState: any) => {
-    console.log("from quotes page", formState);
-    return formState;
+  //create a new weather cron
+  const newQuoteCron = trpc.useMutation(["quotes.new-quote-cron"]);
+
+  let isSuccess = false;
+  const getData = async (formState: any) => {
+    newQuoteCron.mutate(formState);
+    isSuccess = newQuoteCron.isSuccess;
+    console.log(newQuoteCron ?? null);
   };
 
   return (

@@ -8,4 +8,7 @@ export const baseUrls = {
   newWeatherCron: encodeURI(
     "https://text-me-rouge.vercel.app/api/weather/trigger-weather-text"
   ),
+  newQuoteCron: encodeURI(
+    "https://text-me-rouge.vercel.app/api/quotes/trigger-quote-text"
+  ),
 };

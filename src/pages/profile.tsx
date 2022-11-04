@@ -4,6 +4,7 @@ import type { NextPage } from "next";
 import { supabase } from "../utils/supabaseClient";
 import { getPosition } from "../utils/getPosition";
 import { signOut } from "../utils/signOut";
+import Card from "../components/Card";
 
 const Profile: NextPage = () => {
   const user = supabase.auth.user();
@@ -88,18 +89,15 @@ const Profile: NextPage = () => {
                   <div className="flex flex-wrap justify-center">
                     <div className="w-full lg:w-9/12 px-4">
                       <p className="mb-4 text-lg leading-relaxed text-gray-800">
-                        An artist of considerable range, Jenna the name taken by
-                        Melbourne-raised, Brooklyn-based Nick Murphy writes,
-                        performs and records all of his own music, giving it a
-                        warm, intimate feel with a solid groove structure. An
-                        artist of considerable range.
+                        Welcome to your profile! below you will see all the text
+                        message reminders you have set up.
                       </p>
                       <a
                         href="#pablo"
                         className="font-normal text-pink-500"
                         onClick={(e) => e.preventDefault()}
                       >
-                        Show more
+                        Jump to reminders
                       </a>
                     </div>
                   </div>
