@@ -20,7 +20,7 @@ interface UserData {
   phone: string;
   id: string;
   prevState: null;
-  user: {};
+  user: any;
 }
 
 type Time = {
