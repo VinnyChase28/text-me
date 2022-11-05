@@ -1,8 +1,10 @@
 import { useState, useRef, useEffect } from "react";
 import { supabase } from "../utils/supabaseClient";
-import moment from "moment";
+import { trpc } from "../utils/trpc";
 import { getPosition } from "../utils/getPosition";
+import moment from "moment";
 import autoAnimate from "@formkit/auto-animate";
+import Button from "../components/Button";
 const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone ?? null;
 
 type FormProps = {
@@ -13,6 +15,13 @@ type FormProps = {
   onSubmit?: any;
   disabled: boolean;
 };
+
+interface UserData {
+  phone: string;
+  id: string;
+  prevState: null;
+  user: {};
+}
 
 type Time = {
   hour: string;
@@ -29,8 +38,25 @@ const Form = ({
 }: FormProps) => {
   //get user and location
   const user = supabase.auth.user();
+
+  //if we have a user, call getUserSettings
   const [location, setLocation] = useState({ latitude: null, longitude: null });
 
+  const [weatherData, setWeatherData] = useState<any>({
+    sky: "",
+    temp: "",
+    feelsLike: "",
+    minTemp: "",
+    maxTemp: "",
+    country: "",
+    name: "",
+  });
+
+  //get user settings with trpc
+  const userSettings = trpc.useQuery(["supabase.get-user-settings"]);
+  useEffect(() => {
+    console.log("userSettings", userSettings);
+  });
   //open and close form animation
   const [form, showForm] = useState(false);
   const reveal = () => {
@@ -62,11 +88,12 @@ const Form = ({
     longitude: location?.longitude,
   });
 
-  useEffect(() => {
-    console.log(state);
-  }, [state]);
+  // useEffect(() => {
+  //   console.log(state);
+  // }, [state]);
 
-  const [submitted, setSubmitted] = useState(false);
+  //control button action processing state
+  const [processing, setProcessing] = useState(false);
 
   useEffect(() => {
     getPosition()
@@ -94,9 +121,22 @@ const Form = ({
     setState({ ...state, time: time24 });
   }, [time]);
 
-  const handleSubmit = (e: any, state: any) => {
+  const handleSubmit = async (e: any, state: any) => {
+    //if clicked, disable button and set processing to true and wait for results
+    setProcessing(true);
     e.preventDefault();
-    onSubmit(state);
+    const result = await onSubmit(state);
+    console.log(result);
+    if (result?.isLoading) {
+      console.log("loading");
+      setProcessing(true);
+    } else if (result?.status === "success") {
+      console.log("success");
+      setProcessing(true);
+    } else if (result?.isError) {
+      console.log("error");
+      setProcessing(false);
+    }
   };
 
   // async await is up to you
@@ -263,15 +303,15 @@ const Form = ({
               </div>
             ) : null}
           </div>
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            disabled={disabled}
-            onClick={(e) => {
+          <Button
+            processing={processing}
+            className="bg-purple-600"
+            onClick={(e: any) => {
               handleSubmit(e, state);
             }}
           >
             Submit
-          </button>
+          </Button>
         </form>
       )}
     </div>

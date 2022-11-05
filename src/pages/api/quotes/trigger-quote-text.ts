@@ -16,7 +16,6 @@ export default async function handler(
     .then((data) => {
       return data;
     });
-  console.log(data.content);
   const quoteText = data?.content;
   const author = data?.author;
   client.messages
@@ -30,5 +29,5 @@ export default async function handler(
       console.error("Got an error:", e.code, e.message);
     });
 
-  res.status(200).json(_req.body);
+  res.status(200).json(data?.content);
 }
