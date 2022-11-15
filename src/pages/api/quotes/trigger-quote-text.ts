@@ -17,7 +17,7 @@ export default async function handler(
     });
   const quoteText = data?.content;
   const author = data?.author;
-  client.messages
+  await client.messages
     .create({
       from: twilioNumber,
       to: _req.body.phone,
