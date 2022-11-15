@@ -7,7 +7,6 @@ export default async function handler(
   _req: NextApiRequest,
   res: NextApiResponse
 ) {
-  console.log(_req);
   const client = twilioClient;
   const data = await fetch(`${baseUrls.quote}`)
     .then((res) => {
@@ -18,7 +17,7 @@ export default async function handler(
     });
   const quoteText = data?.content;
   const author = data?.author;
-  client.messages
+  const text: any = client.messages
     .create({
       from: twilioNumber,
       to: _req.body.phone,
@@ -29,5 +28,7 @@ export default async function handler(
       console.error("Got an error:", e.code, e.message);
     });
 
-  res.status(200).json(data?.content);
+  console.log("After Twilio call", text);
+
+  res.status(200).json(text);
 }
