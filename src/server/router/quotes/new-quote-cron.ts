@@ -4,14 +4,14 @@ import { supabase } from "../../../utils/supabaseClient";
 import { baseUrls } from "../../../utils/baseUrls";
 
 //this route will create a new cron job with the user preferences.
-console.log(baseUrls.quote);
+
 const easy_cron_token = process.env.NEXT_PUBLIC_EASY_CRON_KEY;
 type ErrorMessage = {
   errorMessage: string;
   isError: boolean;
 };
 
-export const quoteCronRouter: any = createRouter().mutation("new-quote-cron", {
+export const quoteCronRouter = createRouter().mutation("new-quote-cron", {
   input: z
     .object({
       name: z.string(),

@@ -11,7 +11,7 @@ type ErrorMessage = {
   isError: boolean;
 };
 
-export const weatherCronRouter: any = createRouter().mutation(
+export const weatherCronRouter = createRouter().mutation(
   "new-weather-cron",
   {
     input: z

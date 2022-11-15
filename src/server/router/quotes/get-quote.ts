@@ -1,7 +1,7 @@
 import { createRouter } from "../context";
 import { baseUrls } from "../../../utils/baseUrls";
 
-export const quoteRouter: any = createRouter().query("get-quote", {
+export const quoteRouter = createRouter().query("get-quote", {
   //this is the input provided by the client
   async resolve() {
     const data = await fetch(`${baseUrls.quote}`)

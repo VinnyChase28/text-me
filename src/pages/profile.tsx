@@ -16,6 +16,13 @@ type UserSettings = {
   [key: string]: string | object;
 };
 
+//create a type for settingsData
+type SettingsData = {
+  id: string;
+  user_id: string;
+  settings: UserSettings;
+};
+
 const Profile: NextPage = () => {
   const user = supabase.auth.user();
   const router = useRouter();
@@ -24,21 +31,18 @@ const Profile: NextPage = () => {
     longitude: null,
   });
 
+  const phone: any = { phone: user.phone };
   //call trpc get-user-settings route
-  const test = trpc.useQuery([
-    "supabase.get-user-settings",
-    // @ts-ignore
-    { phone: user?.phone },
-  ]);
+  const settingsData = trpc.useQuery(["supabase.get-user-settings", phone]);
 
   const [userSettings, setUserSettings] = useState<UserSettings>({});
 
   useEffect(() => {
-    if (test.data) {
-      setUserSettings(test.data.response[0]);
-    }
     console.log("userSettings", userSettings);
-  }, [test.data]);
+    if (settingsData.data) {
+      setUserSettings(settingsData.data.response[0] || {});
+    }
+  }, [settingsData?.data]);
 
   useEffect(() => {
     getPosition()
