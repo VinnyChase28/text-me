@@ -54,9 +54,9 @@ const Profile: NextPage = () => {
       });
   }, []);
 
-  //loop over userSettings object and display each setting in a card.
-  //I'm using the key as the title and the value as the description
-  const RenderSettings = () => {
+  //tell me the type of RenderSettings
+
+  const RenderSettings: any = () => {
     return Object.keys(userSettings).map((key) => {
       return (
         //just show simple text for now
