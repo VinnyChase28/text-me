@@ -1,17 +1,15 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { twilioClient, twilioNumber } from "../../../utils/twilioClient";
 import { baseUrls } from "../../../utils/baseUrls";
-//all outside of client calls to the backend will go throughtraditional api routes
-//always await twilio text
+
 
 const weatherApiKey = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
-//TODO: call weather trpc route instead of redoing everything here
+
 export default async function handler(
   _req: NextApiRequest,
   res: NextApiResponse
 ) {
   const client = twilioClient;
-  //make a request to get-weather.ts
   const lat = _req.body.latitude;
   const lon = _req.body.longitude;
   const data = await fetch(
@@ -24,7 +22,6 @@ export default async function handler(
       return data;
     });
 
-  console.log("BODY:", _req.body);
   //create weather data variables
   const description = data.weather[0].description;
   const temp = data.main.temp;
