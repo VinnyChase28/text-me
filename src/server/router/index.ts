@@ -6,7 +6,7 @@ import { weatherCronRouter } from "./weather/new-weather-cron";
 import { quoteRouter } from "./quotes/get-quote";
 import { factRouter } from "./facts/get-fact";
 import { quoteCronRouter } from "./quotes/new-quote-cron";
-import { getUserSettings } from "./supabase/getUserSettings";
+import { getUserSettingsRouter } from "./supabase/get-user-settings";
 
 export const appRouter = createRouter()
   .transformer(superjson)
@@ -15,7 +15,7 @@ export const appRouter = createRouter()
   .merge("quotes.", quoteRouter)
   .merge("quotes.", quoteCronRouter)
   .merge("facts.", factRouter)
-  .merge("supabase.", getUserSettings);
+  .merge("supabase.", getUserSettingsRouter);
 
 // export type definition of API
 export type AppRouter = typeof appRouter;

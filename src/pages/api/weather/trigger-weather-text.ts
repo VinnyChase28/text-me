@@ -22,7 +22,6 @@ export default async function handler(
       return data;
     });
 
-  //create weather data variables
   const description = data.weather[0].description;
   const temp = data.main.temp;
   const feelsLike = data.main.feels_like;

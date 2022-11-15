@@ -11,17 +11,34 @@ type ProfileProps = {
   phone: string;
 };
 
+//create a type UserSettings. it is an objects that accepts both strings and objects
+type UserSettings = {
+  [key: string]: string | object;
+};
+
 const Profile: NextPage = () => {
   const user = supabase.auth.user();
   const router = useRouter();
-  const [location, setLocation] = useState({ latitude: null, longitude: null });
+  const [location, setLocation] = useState({
+    latitude: null,
+    longitude: null,
+  });
 
-  //use trpc to getUserSettings
-  // const userSettings = trpc.useQuery([
-  //   "supabase.get-user-settings",
-  //   //pass in phone number typesafe
-  //   { phone: user?.phone || "" },
-  // ]);
+  //call trpc get-user-settings route
+  const test = trpc.useQuery([
+    "supabase.get-user-settings",
+    // @ts-ignore
+    { phone: user?.phone },
+  ]);
+
+  const [userSettings, setUserSettings] = useState<UserSettings>({});
+
+  useEffect(() => {
+    if (test.data) {
+      setUserSettings(test.data.response[0]);
+    }
+    console.log("userSettings", userSettings);
+  }, [test.data]);
 
   useEffect(() => {
     getPosition()
@@ -36,6 +53,20 @@ const Profile: NextPage = () => {
         console.error(error);
       });
   }, []);
+
+  //loop over userSettings object and display each setting in a card.
+  //I'm using the key as the title and the value as the description
+  const RenderSettings = () => {
+    return Object.keys(userSettings).map((key) => {
+      return (
+        //just show simple text for now
+        <div key={key}>
+          <p>{key}</p>
+          <p>{JSON.stringify(userSettings[key])}</p>
+        </div>
+      );
+    });
+  };
 
   return (
     <>
@@ -113,6 +144,25 @@ const Profile: NextPage = () => {
                         Jump to reminders
                       </a>
                     </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section className="relative block" style={{ height: "500px" }}>
+          <div className="container mx-auto px-4">
+            <div className="px-6">
+              <div className="flex flex-wrap justify-center">
+                <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
+                  <div className="relative"></div>
+                </div>
+              </div>
+
+              <div className="mt-10 py-10  text-center">
+                <div className="flex flex-wrap justify-center">
+                  <div className="w-full lg:w-9/12 px-4">
+                    <RenderSettings />
                   </div>
                 </div>
               </div>
