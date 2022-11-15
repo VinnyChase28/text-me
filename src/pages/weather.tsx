@@ -12,10 +12,15 @@ import Link from "next/link";
 const Weather: NextPage = () => {
   const user = supabase.auth.user();
 
-  //TODO: check if user has a cron going for weather, and if so disable form and push them towards the profile page.
+  const [location, setLocation] = useState<any>({
+    latitude: 0,
+    longitude: 0,
+  });
 
-  //this variable makes a req to the get-weather route with a payload
-  const [location, setLocation] = useState({ latitude: null, longitude: null });
+  type Query = {
+    query: any;
+  };
+
   useEffect(() => {
     getPosition()
       .then((position: any) => {
@@ -30,10 +35,9 @@ const Weather: NextPage = () => {
       });
   }, []);
 
-  const weather = trpc.useQuery([
-    "weather.get-weather",
-    { lat: location.latitude, lon: location.longitude },
-  ]);
+  //create type Group for useQuery
+
+  const weather = trpc.useQuery(["weather.get-weather", { location } as any]);
 
   const [weatherData, setWeatherData] = useState<any>({
     sky: "",

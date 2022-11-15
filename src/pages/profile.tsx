@@ -7,20 +7,8 @@ import { getPosition } from "../utils/getPosition";
 import { signOut } from "../utils/signOut";
 import Card from "../components/Card";
 
-type ProfileProps = {
-  phone: string;
-};
-
-//create a type UserSettings. it is an objects that accepts both strings and objects
 type UserSettings = {
   [key: string]: string | object;
-};
-
-//create a type for settingsData
-type SettingsData = {
-  id: string;
-  user_id: string;
-  settings: UserSettings;
 };
 
 const Profile: NextPage = () => {
@@ -32,17 +20,7 @@ const Profile: NextPage = () => {
   });
 
   const phone: any = { phone: user.phone };
-  //call trpc get-user-settings route
   const settingsData = trpc.useQuery(["supabase.get-user-settings", phone]);
-
-  const [userSettings, setUserSettings] = useState<UserSettings>({});
-
-  useEffect(() => {
-    console.log("userSettings", userSettings);
-    if (settingsData.data) {
-      setUserSettings(settingsData.data.response[0] || {});
-    }
-  }, [settingsData?.data]);
 
   useEffect(() => {
     getPosition()
@@ -59,18 +37,6 @@ const Profile: NextPage = () => {
   }, []);
 
   //tell me the type of RenderSettings
-
-  const RenderSettings: any = () => {
-    return Object.keys(userSettings).map((key) => {
-      return (
-        //just show simple text for now
-        <div key={key}>
-          <p>{key}</p>
-          <p>{JSON.stringify(userSettings[key])}</p>
-        </div>
-      );
-    });
-  };
 
   return (
     <>
@@ -166,7 +132,13 @@ const Profile: NextPage = () => {
               <div className="mt-10 py-10  text-center">
                 <div className="flex flex-wrap justify-center">
                   <div className="w-full lg:w-9/12 px-4">
-                    <RenderSettings />
+                    {settingsData.isLoading ? (
+                      "Loading..."
+                    ) : settingsData.isError ? (
+                      "Error!"
+                    ) : settingsData.data ? (
+                      <div>{JSON.stringify(settingsData.data.response[0])}</div>
+                    ) : null}
                   </div>
                 </div>
               </div>

@@ -30,7 +30,7 @@ export default async function handler(
     .create({
       from: twilioNumber,
       to: _req.body.phone,
-      body: `Hello ${_req.body.name}!\n\n${_req.body.text}\n\n${weatherText}`,
+      body: `${_req.body.text}\n\n${weatherText}`,
     })
     .then((message) => console.log(message.sid))
     .catch((e) => {
