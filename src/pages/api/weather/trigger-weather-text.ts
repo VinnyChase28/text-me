@@ -2,6 +2,8 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { twilioClient, twilioNumber } from "../../../utils/twilioClient";
 import { baseUrls } from "../../../utils/baseUrls";
 //all outside of client calls to the backend will go throughtraditional api routes
+//always await twilio text
+
 const weatherApiKey = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
 //TODO: call weather trpc route instead of redoing everything here
 export default async function handler(
@@ -28,8 +30,7 @@ export default async function handler(
   const temp = data.main.temp;
   const feelsLike = data.main.feels_like;
   const weatherText = `The weather is ${description} and the temperature is ${temp} degrees. It feels like ${feelsLike} degrees.`;
-
-  client.messages
+  await client.messages
     .create({
       from: twilioNumber,
       to: _req.body.phone,

@@ -3,6 +3,7 @@ import { twilioClient, twilioNumber } from "../../../utils/twilioClient";
 import { baseUrls } from "../../../utils/baseUrls";
 
 //all outside of client calls to the backend will go through traditional api routes
+//always await twilio text
 export default async function handler(
   _req: NextApiRequest,
   res: NextApiResponse
