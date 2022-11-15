@@ -1,15 +1,28 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import type { NextPage } from "next";
+import { trpc } from "../utils/trpc";
 import { supabase } from "../utils/supabaseClient";
 import { getPosition } from "../utils/getPosition";
 import { signOut } from "../utils/signOut";
 import Card from "../components/Card";
 
+type ProfileProps = {
+  phone: string;
+};
+
 const Profile: NextPage = () => {
   const user = supabase.auth.user();
   const router = useRouter();
   const [location, setLocation] = useState({ latitude: null, longitude: null });
+
+  //use trpc to getUserSettings
+  // const userSettings = trpc.useQuery([
+  //   "supabase.get-user-settings",
+  //   //pass in phone number typesafe
+  //   { phone: user?.phone || "" },
+  // ]);
+
   useEffect(() => {
     getPosition()
       .then((position: any) => {

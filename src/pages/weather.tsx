@@ -7,7 +7,6 @@ import Head from "next/head";
 import Form from "../components/Form";
 import Banner from "../components/Banner";
 import WeatherCard from "../components/WeatherCard";
-
 import Link from "next/link";
 
 const Weather: NextPage = () => {

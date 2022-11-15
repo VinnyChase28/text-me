@@ -16,13 +16,6 @@ type FormProps = {
   disabled: boolean;
 };
 
-interface UserData {
-  phone: string;
-  id: string;
-  prevState: null;
-  user: any;
-}
-
 type Time = {
   hour: string;
   amOrPm: string;
