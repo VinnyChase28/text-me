@@ -29,7 +29,7 @@ export default async function handler(
   const feelsLike = data.main.feels_like;
   const weatherText = `The weather is ${description} and the temperature is ${temp} degrees. It feels like ${feelsLike} degrees.`;
 
-  let test = client.messages
+  client.messages
     .create({
       from: twilioNumber,
       to: _req.body.phone,
@@ -40,6 +40,7 @@ export default async function handler(
       console.error("Got an error:", e.code, e.message);
     });
 
+  console.log("After Twilio call");
 
-  res.status(200).json(test);
+  res.status(200).json(_req.body);
 }

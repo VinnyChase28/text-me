@@ -17,7 +17,7 @@ export default async function handler(
     });
   const quoteText = data?.content;
   const author = data?.author;
-  const text: any = client.messages
+  client.messages
     .create({
       from: twilioNumber,
       to: _req.body.phone,
@@ -28,7 +28,7 @@ export default async function handler(
       console.error("Got an error:", e.code, e.message);
     });
 
-  console.log("After Twilio call", text);
+  console.log("After Twilio call");
 
-  res.status(200).json(text);
+  res.status(200).json(quoteText);
 }
