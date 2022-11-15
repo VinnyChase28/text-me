@@ -4,7 +4,7 @@ import { supabase } from "../../../utils/supabaseClient";
 
 //this route will simply retreive weather data based on user location
 
-export const getUserSettings = createRouter().query("get-user-settings", {
+export const getUserSettings: any = createRouter().query("get-user-settings", {
   input: z
     .object({
       phone: z.string(),
