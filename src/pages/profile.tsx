@@ -43,6 +43,7 @@ const Profile: NextPage = () => {
     const timezone = value.settings.timezone;
     return (
       <ProfileCard
+        key={i}
         name={key}
         occurrence={occurrence}
         time={timeString}
