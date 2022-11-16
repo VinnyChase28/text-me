@@ -50,8 +50,6 @@ const Profile: NextPage = () => {
     );
   });
 
-  //create useState and useEffect that will keys from settingsData into an array of objects
-  //that will be passed into the ProfileCard component
   useEffect(() => {
     if (settingsData) {
       const settingsArray: any = [];
@@ -65,10 +63,6 @@ const Profile: NextPage = () => {
       setSettings(settingsArray);
     }
   }, [settingsData.data]);
-
-  useEffect(() => {
-    console.log(settings);
-  }, [settings]);
 
   useEffect(() => {
     getPosition()
@@ -116,13 +110,13 @@ const Profile: NextPage = () => {
               y="0"
             >
               <polygon
-                className="text-gray-300 fill-current"
+                className="text-pink-200 fill-current"
                 points="2560 0 2560 100 0 100"
               ></polygon>
             </svg>
           </div>
         </section>
-        <section className="relative py-16 bg-gray-300">
+        <section className="relative py-16 bg-purple-200">
           <div className="container mx-auto px-4">
             <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg -mt-64">
               <div className="px-6">

@@ -53,7 +53,11 @@ const Form = ({
   //open and close form animation
   const [form, showForm] = useState(false);
   const reveal = () => {
-    showForm(!form);
+    if (!user) {
+      alert("Please login first");
+    } else {
+      showForm(!form);
+    }
   };
   const parent = useRef(null);
   useEffect(() => {
@@ -84,8 +88,21 @@ const Form = ({
   // useEffect(() => {
   //   console.log(state);
   // }, [state]);
+  const phone: any = { phone: user.phone };
+  const settingsData = trpc.useQuery(["supabase.get-user-settings", phone]);
 
-  //control button action processing state
+  //if there is settings data for an api AND we are currently on that api, hide the form
+  useEffect(() => {
+    console.log("settingsData", settingsData);
+    //loop through settingsData and see if any of the keys match the api name
+    if (settingsData?.data) {
+      for (let key in settingsData?.data?.response[0]) {
+        if (key === api) {
+          showForm(false);
+        }
+      }
+    }
+  }, [settingsData]);
   const [processing, setProcessing] = useState(false);
 
   useEffect(() => {
@@ -115,11 +132,9 @@ const Form = ({
   }, [time]);
 
   const handleSubmit = async (e: any, state: any) => {
-    //if clicked, disable button and set processing to true and wait for results
     setProcessing(true);
     e.preventDefault();
     const result = await onSubmit(state);
-    console.log(result);
     if (result?.isLoading) {
       console.log("loading");
       setProcessing(true);
@@ -142,6 +157,7 @@ const Form = ({
       >
         New Text
       </button>
+
       {user && form && (
         <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-12">
           <p>{description}</p>
@@ -153,18 +169,7 @@ const Form = ({
             >
               Phone Number
             </label>
-            {!user?.phone ? (
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="phone"
-                type="text"
-                value={user?.phone}
-                placeholder="+12345678910"
-                onChange={(e) => setState({ ...state, phone: e.target.value })}
-              />
-            ) : (
-              <p>{user?.phone}</p>
-            )}
+            <p>{user?.phone}</p>
           </div>
           <div className="mb-4">
             <label
@@ -227,7 +232,6 @@ const Form = ({
             <p className="text-red-500 text-xs italic">
               Please choose a password.
             </p>
-
             <div className="mt-2 p-5 w-40 bg-white rounded-lg shadow-xl hover:cursor-pointer">
               <div className="flex">
                 <select
