@@ -91,9 +91,9 @@ const Form = ({
   useEffect(() => {
     for (const key in settingsData?.data?.response[0]) {
       if (key === api) {
-        console.log(settingsData?.data?.response[0][`${api}`]);
         if (
-          settingsData?.data?.response[0][`${api}`].settings.api_active === true
+          settingsData?.data?.response[0][`${api}`]?.settings?.api_active ===
+          true
         ) {
           console.log("api enabled");
           setProcessing(true);

@@ -23,8 +23,8 @@ const Profile: NextPage = () => {
     //create key and value variables
     const key = Object.keys(setting)[0];
     const value = setting[key];
-    const occurrence = value.settings.occurrence;
-    let time = value.settings.time;
+    const occurrence = value?.settings?.occurrence;
+    let time = value?.settings?.time;
     let timeString;
     //convert time 24hr to 12hr
     if (time > 12) {
@@ -40,7 +40,7 @@ const Profile: NextPage = () => {
       timeString = `${time} AM`;
     }
 
-    const timezone = value.settings.timezone;
+    const timezone = value?.settings?.timezone;
     return (
       <ProfileCard
         key={i}
