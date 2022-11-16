@@ -2,7 +2,7 @@ import { createRouter } from "../context";
 import { z } from "zod";
 import { supabase } from "../../../utils/supabaseClient";
 import { baseUrls } from "../../../utils/baseUrls";
-
+import { welcomeText } from "../../../utils/welcomeText";
 //this route will create a new cron job with the user preferences.
 
 const easy_cron_token = process.env.NEXT_PUBLIC_EASY_CRON_KEY;
@@ -75,6 +75,7 @@ export const quoteCronRouter = createRouter().mutation("new-quote-cron", {
         quotes: { settings: input, cron_job_id: data?.cron_job_id },
       });
 
+    await welcomeText(input?.phone, input?.api_name);
     return { message: data };
   },
 });

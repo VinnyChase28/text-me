@@ -177,28 +177,13 @@ const Form = ({
             </label>
             <p>{user?.phone}</p>
           </div>
+          <div className="mb-4"></div>
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="username"
             >
-              Name
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="phone"
-              type="text"
-              value={state.name}
-              placeholder="Enter your name"
-              onChange={(e) => setState({ ...state, name: e.target.value })}
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="username"
-            >
-              Custom Message
+              Custom Message - will appear at the top
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -235,9 +220,6 @@ const Form = ({
               Weekly
             </button>
 
-            <p className="text-red-500 text-xs italic">
-              Please choose a password.
-            </p>
             <div className="mt-2 p-5 w-40 bg-white rounded-lg shadow-xl hover:cursor-pointer">
               <div className="flex">
                 <select

@@ -7,10 +7,12 @@ export const deleteApiSettings = createRouter().query("delete-api-settings", {
     api: z.string(),
   }),
   async resolve({ input }) {
-    //add the new api's to this query when they are ready
+    //upsert to clear the api settings
     const { data, error } = await supabase
-      .from("phone_numbers")
-      .select("weather, quotes");
+      .from("countries")
+      .upsert({ id: 1, name: "Albania" })
+      .select();
+
     return {
       response: data,
     };
