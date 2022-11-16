@@ -96,7 +96,7 @@ const Form = ({
     console.log("settingsData", settingsData);
     //loop through settingsData and see if any of the keys match the api name
     if (settingsData?.data) {
-      for (let key in settingsData?.data?.response[0]) {
+      for (const key in settingsData?.data?.response[0]) {
         if (key === api) {
           showForm(false);
         }
