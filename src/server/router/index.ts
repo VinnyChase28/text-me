@@ -7,6 +7,8 @@ import { quoteRouter } from "./quotes/get-quote";
 import { factRouter } from "./facts/get-fact";
 import { quoteCronRouter } from "./quotes/new-quote-cron";
 import { getUserSettingsRouter } from "./supabase/get-user-settings";
+import { editApiSettings } from "./supabase/edit-api";
+import { deleteApiSettings } from "./supabase/delete-api";
 
 export const appRouter = createRouter()
   .transformer(superjson)
@@ -15,7 +17,9 @@ export const appRouter = createRouter()
   .merge("quotes.", quoteRouter)
   .merge("quotes.", quoteCronRouter)
   .merge("facts.", factRouter)
-  .merge("supabase.", getUserSettingsRouter);
+  .merge("supabase.", getUserSettingsRouter)
+  .merge("supabase.", editApiSettings)
+  .merge("supabase.", deleteApiSettings);
 
 // export type definition of API
 export type AppRouter = typeof appRouter;
