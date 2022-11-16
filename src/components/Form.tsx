@@ -89,7 +89,6 @@ const Form = ({
   const settingsData = trpc.useQuery(["supabase.get-user-settings", phone]);
 
   useEffect(() => {
-    console.log("settingsData", settingsData);
     for (const key in settingsData?.data?.response[0]) {
       if (key === api) {
         console.log(settingsData?.data?.response[0][`${api}`]);
@@ -136,13 +135,10 @@ const Form = ({
     e.preventDefault();
     const result = await onSubmit(state);
     if (result?.isLoading) {
-      console.log("loading");
       setProcessing(true);
     } else if (result?.status === "success") {
-      console.log("success");
       setProcessing(true);
     } else if (result?.isError) {
-      console.log("error");
       setProcessing(false);
     }
   };

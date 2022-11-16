@@ -2,7 +2,6 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { twilioClient, twilioNumber } from "../../../utils/twilioClient";
 import { baseUrls } from "../../../utils/baseUrls";
 
-
 const weatherApiKey = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
 
 export default async function handler(
@@ -26,6 +25,7 @@ export default async function handler(
   const temp = data.main.temp;
   const feelsLike = data.main.feels_like;
   const weatherText = `The weather is ${description} and the temperature is ${temp} degrees. It feels like ${feelsLike} degrees.`;
+
   await client.messages
     .create({
       from: twilioNumber,
@@ -36,8 +36,6 @@ export default async function handler(
     .catch((e) => {
       console.error("Got an error:", e.code, e.message);
     });
-
-  console.log("After Twilio call");
 
   res.status(200).json(_req.body);
 }
