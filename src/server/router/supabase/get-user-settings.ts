@@ -9,7 +9,9 @@ export const getUserSettingsRouter = createRouter().query("get-user-settings", {
     phone: z.string(),
   }),
   async resolve({ input }) {
-    const { data, error } = await supabase.from("phone_numbers").select("*");
+    const { data, error } = await supabase
+      .from("phone_numbers")
+      .select("weather, quotes");
     console.log(data);
     return {
       response: data,

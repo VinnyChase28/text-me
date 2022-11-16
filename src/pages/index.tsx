@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import { trpc } from "../utils/trpc";
 import { supabase } from "../utils/supabaseClient";
 import Head from "next/head";
-import Card from "../components/Card";
+import Card from "../components/Cards/Card";
 
 const Home: NextPage = () => {
   const user = supabase?.auth?.user();

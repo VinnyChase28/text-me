@@ -5,11 +5,7 @@ import { trpc } from "../utils/trpc";
 import { supabase } from "../utils/supabaseClient";
 import { getPosition } from "../utils/getPosition";
 import { signOut } from "../utils/signOut";
-import Card from "../components/Card";
-
-type UserSettings = {
-  [key: string]: string | object;
-};
+import ProfileCard from "../components/Cards/ProfileCard";
 
 const Profile: NextPage = () => {
   const user = supabase.auth.user();
@@ -21,6 +17,58 @@ const Profile: NextPage = () => {
 
   const phone: any = { phone: user.phone };
   const settingsData = trpc.useQuery(["supabase.get-user-settings", phone]);
+
+  const [settings, setSettings] = useState<any>([]);
+  let settingsContent: any = settings.map((setting: any, i: any) => {
+    //create key and value variables
+    let key = Object.keys(setting)[0];
+    let value = setting[key];
+    let occurrence = value.settings.occurrence;
+    let time = value.settings.time;
+    let timeString;
+    //convert time 24hr to 12hr
+    if (time > 12) {
+      timeString = `${time - 12} PM`;
+    } else if (time === 12) {
+      timeString = `${time} PM`;
+    } else if (time === 0) {
+      timeString = `12 AM`;
+    } else {
+      if (time?.startsWith("0")) {
+        time = time?.substring(1);
+      }
+      timeString = `${time} AM`;
+    }
+    let timezone = value.settings.timezone;
+    return (
+      <ProfileCard
+        name={key}
+        occurrence={occurrence}
+        time={timeString}
+        timezone={timezone}
+      />
+    );
+  });
+
+  //create useState and useEffect that will keys from settingsData into an array of objects
+  //that will be passed into the ProfileCard component
+  useEffect(() => {
+    if (settingsData) {
+      const settingsArray: any = [];
+      Object.entries(settingsData?.data?.response[0] ?? {}).forEach(
+        ([key, value]) => {
+          let obj: any = {};
+          obj[key] = value;
+          settingsArray.push(obj);
+        }
+      );
+      setSettings(settingsArray);
+    }
+  }, [settingsData.data]);
+
+  useEffect(() => {
+    console.log(settings);
+  }, [settings]);
 
   useEffect(() => {
     getPosition()
@@ -132,13 +180,13 @@ const Profile: NextPage = () => {
               <div className="mt-10 py-10  text-center">
                 <div className="flex flex-wrap justify-center">
                   <div className="w-full lg:w-9/12 px-4">
-                    {settingsData.isLoading ? (
-                      "Loading..."
-                    ) : settingsData.isError ? (
-                      "Error!"
-                    ) : settingsData.data ? (
-                      <div>{JSON.stringify(settingsData.data.response[0])}</div>
-                    ) : null}
+                    {settingsData.isLoading
+                      ? "Loading..."
+                      : settingsData.isError
+                      ? "Error!"
+                      : settingsData.data
+                      ? settingsContent
+                      : null}
                   </div>
                 </div>
               </div>
