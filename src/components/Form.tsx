@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { supabase } from "../utils/supabaseClient";
 import { trpc } from "../utils/trpc";
 import { getPosition } from "../utils/getPosition";
+import Link from "next/link";
 import moment from "moment";
 import autoAnimate from "@formkit/auto-animate";
 import Button from "../components/Button";
@@ -45,11 +46,6 @@ const Form = ({
     name: "",
   });
 
-  //get user settings with trpc
-  const userSettings = trpc.useQuery(["supabase.get-user-settings"]);
-  useEffect(() => {
-    console.log("userSettings", userSettings);
-  });
   //open and close form animation
   const [form, showForm] = useState(false);
   const reveal = () => {
@@ -88,21 +84,25 @@ const Form = ({
   // useEffect(() => {
   //   console.log(state);
   // }, [state]);
+
   const phone: any = { phone: user.phone };
   const settingsData = trpc.useQuery(["supabase.get-user-settings", phone]);
 
-  //if there is settings data for an api AND we are currently on that api, hide the form
   useEffect(() => {
     console.log("settingsData", settingsData);
-    //loop through settingsData and see if any of the keys match the api name
-    if (settingsData?.data) {
-      for (const key in settingsData?.data?.response[0]) {
-        if (key === api) {
-          showForm(false);
+    for (const key in settingsData?.data?.response[0]) {
+      if (key === api) {
+        console.log(settingsData?.data?.response[0][`${api}`]);
+        if (
+          settingsData?.data?.response[0][`${api}`].settings.api_active === true
+        ) {
+          console.log("api enabled");
+          setProcessing(true);
         }
       }
     }
   }, [settingsData]);
+
   const [processing, setProcessing] = useState(false);
 
   useEffect(() => {
@@ -157,6 +157,15 @@ const Form = ({
       >
         New Text
       </button>
+      {processing && (
+        <p>
+          You already have a text reminder for this API. Visit your{" "}
+          <Link href="/profile">
+            <a className="underline">Profile</a>
+          </Link>{" "}
+          to manage it.
+        </p>
+      )}
 
       {user && form && (
         <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-12">
