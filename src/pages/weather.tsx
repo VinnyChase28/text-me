@@ -83,7 +83,7 @@ const Weather: NextPage = () => {
       </Head>
 
       <main className="container mx-auto flex flex-col justify-center p-4">
-        <Banner>
+        <Banner title="Weather">
           {weather ? (
             <div className="grid gap-3 pt-3 mt-3 text-center md:grid-cols-4">
               <WeatherCard>{`${weatherData.name} ${weatherData.country}`}</WeatherCard>

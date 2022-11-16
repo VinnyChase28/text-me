@@ -24,6 +24,7 @@ const Profile: NextPage = () => {
     const key = Object.keys(setting)[0];
     const value = setting[key];
     const occurrence = value?.settings?.occurrence;
+    const cronJobId = value?.cron_job_id;
     let time = value?.settings?.time;
     let timeString;
     //convert time 24hr to 12hr
@@ -39,7 +40,6 @@ const Profile: NextPage = () => {
       }
       timeString = `${time} AM`;
     }
-
     const timezone = value?.settings?.timezone;
     return (
       <ProfileCard
@@ -48,6 +48,7 @@ const Profile: NextPage = () => {
         occurrence={occurrence}
         time={timeString}
         timezone={timezone}
+        cronJobId={cronJobId}
       />
     );
   });

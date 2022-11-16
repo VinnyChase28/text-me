@@ -33,7 +33,7 @@ const Facts: NextPage = () => {
       </Head>
 
       <main className="container mx-auto flex flex-col justify-center p-4">
-        <Banner>
+        <Banner title="Facts">
           <figure className="mx-auto max-w-screen-md text-center">
             <svg
               aria-hidden="true"
