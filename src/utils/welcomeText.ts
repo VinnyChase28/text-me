@@ -6,7 +6,7 @@ export async function welcomeText(phoneNumber: string, api: string) {
     .create({
       from: twilioNumber,
       to: phoneNumber,
-      body: `Thank you for using the ${api} API! you will receive a text message every day at the time you specified.`,
+      body: `Thank you for using the ${api} API! you will receive a text message every day at the time you specified. If you want to stop receiving messages, please send the word "stop" to this number.`,
     })
     .then((message) => console.log(message.sid))
     .catch((e) => {
