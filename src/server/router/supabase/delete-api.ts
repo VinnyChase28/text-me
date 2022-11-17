@@ -29,7 +29,7 @@ export const deleteApiSettings = createRouter().mutation(
           return data;
         });
 
-      let apiObject: any = { phone_number: input.phoneNumber };
+      const apiObject: any = { phone_number: input.phoneNumber };
       apiObject[input.api] = null;
       console.log(apiObject);
       const { data: supabaseData, error: supabaseError } = await supabase
