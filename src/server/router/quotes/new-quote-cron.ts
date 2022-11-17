@@ -75,7 +75,7 @@ export const quoteCronRouter = createRouter().mutation("new-quote-cron", {
         quotes: { settings: input, cron_job_id: data?.cron_job_id },
       });
 
-    await welcomeText(input?.phone, input?.api_name);
+    await welcomeText(input?.phone, input?.api_name, input?.occurrence);
     return { message: data };
   },
 });

@@ -75,7 +75,7 @@ export const weatherCronRouter = createRouter().mutation("new-weather-cron", {
         weather: { settings: input, cron_job_id: data?.cron_job_id },
       });
 
-    await welcomeText(input?.phone, input?.api_name);
+    await welcomeText(input?.phone, input?.api_name, input?.occurrence);
     return { message: data };
   },
 });
