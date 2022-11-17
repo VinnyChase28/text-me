@@ -89,12 +89,10 @@ const Form = ({
   const settingsData = trpc.useQuery(["supabase.get-user-settings", phone]);
 
   useEffect(() => {
-    for (const key in settingsData?.data?.response[0]) {
+    const response = settingsData?.data?.response || [];
+    for (const key in response[0]) {
       if (key === api) {
-        if (
-          settingsData?.data?.response[0][`${api}`]?.settings?.api_active ===
-          true
-        ) {
+        if (response[0][`${api}`]?.settings?.api_active === true) {
           console.log("api enabled");
           setProcessing(true);
         }

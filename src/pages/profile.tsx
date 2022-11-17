@@ -58,13 +58,12 @@ const Profile: NextPage = () => {
   useEffect(() => {
     if (settingsData) {
       const settingsArray: any = [];
-      Object.entries(settingsData?.data?.response[0] ?? {}).forEach(
-        ([key, value]) => {
-          const obj: any = {};
-          obj[key] = value;
-          settingsArray.push(obj);
-        }
-      );
+      const response = settingsData?.data?.response ?? [];
+      Object.entries(response[0] ?? {}).forEach(([key, value]) => {
+        const obj: any = {};
+        obj[key] = value;
+        settingsArray.push(obj);
+      });
       setSettings(settingsArray);
     }
   }, [settingsData.data]);
