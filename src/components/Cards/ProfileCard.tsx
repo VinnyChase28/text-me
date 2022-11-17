@@ -47,7 +47,17 @@ const ProfileCard = ({
           <button>Edit</button>
           <p>{`CRON job ID: ${cronJobId ?? ""}`}</p>
         </section>
-      ) : null}
+      ) : (
+        <section className="invisible">
+          <h2 className="text-lg text-gray-700">{name}</h2>
+          <p className="text-sm text-gray-600">{occurrence}</p>
+          <p className="text-sm text-gray-600">{time}</p>
+          <p className="text-sm text-gray-600">{timezone}</p>
+          <button onClick={handleSettingsMutation}>Delete</button>
+          <button>Edit</button>
+          <p>{`CRON job ID: ${cronJobId ?? ""}`}</p>
+        </section>
+      )}
     </div>
   );
 };

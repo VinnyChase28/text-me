@@ -41,22 +41,17 @@ const Profile: NextPage = () => {
       }
       timeString = `${time} AM`;
     }
-
     const timezone = value?.settings?.timezone;
     return (
-      <div>
-        {value !== null ? (
-          <ProfileCard
-            key={i ?? 0}
-            name={key}
-            occurrence={occurrence}
-            time={timeString}
-            timezone={timezone}
-            cronJobId={cronJobId}
-            phoneNumber={user.phone}
-          />
-        ) : null}
-      </div>
+      <ProfileCard
+        key={i}
+        name={key}
+        occurrence={occurrence}
+        time={timeString}
+        timezone={timezone}
+        cronJobId={cronJobId}
+        phoneNumber={user.phone}
+      />
     );
   });
 
