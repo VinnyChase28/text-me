@@ -6,12 +6,19 @@ export async function welcomeText(
   occurrence: string
 ) {
   const client = twilioClient;
-  const messageDaily = `Hi! You have subscribed to the ${api} API. You will receive a text message every ${occurrence}.`;
+  let message = "";
+  //if occurrence is daily, create daily message otherwise create weekly message
+  if (occurrence == "daily") {
+    message = `Thank you for using the ${api} API! You will receive a ${api} quote every day at the time you specified`;
+  } else if (occurrence == "weekly") {
+    message = `Thank you for using the ${api} API! You will receive a a text once a week at the time you specified`;
+  }
+
   await client.messages
     .create({
       from: twilioNumber,
       to: phoneNumber,
-      body: `Thank you for using the ${api} API! you will receive a text message every day at the time you specified. If you want to stop receiving messages, please send the word "stop" to this number.`,
+      body: message,
     })
     .then((message) => console.log(message.sid))
     .catch((e) => {
