@@ -47,7 +47,7 @@ const Profile: NextPage = () => {
       <div>
         {value !== null ? (
           <ProfileCard
-            key={i}
+            key={i ?? 0}
             name={key}
             occurrence={occurrence}
             time={timeString}
