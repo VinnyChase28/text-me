@@ -19,6 +19,7 @@ const Profile: NextPage = () => {
   const settingsData = trpc.useQuery(["supabase.get-user-settings", phone]);
 
   const [settings, setSettings] = useState<any>([]);
+
   const settingsContent: any = settings.map((setting: any, i: any) => {
     //create key and value variables
     const key = Object.keys(setting)[0];
@@ -40,16 +41,22 @@ const Profile: NextPage = () => {
       }
       timeString = `${time} AM`;
     }
+
     const timezone = value?.settings?.timezone;
     return (
-      <ProfileCard
-        key={i}
-        name={key}
-        occurrence={occurrence}
-        time={timeString}
-        timezone={timezone}
-        cronJobId={cronJobId}
-      />
+      <div>
+        {value !== null ? (
+          <ProfileCard
+            key={i}
+            name={key}
+            occurrence={occurrence}
+            time={timeString}
+            timezone={timezone}
+            cronJobId={cronJobId}
+            phoneNumber={user.phone}
+          />
+        ) : null}
+      </div>
     );
   });
 

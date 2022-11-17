@@ -8,7 +8,7 @@ import { factRouter } from "./facts/get-fact";
 import { quoteCronRouter } from "./quotes/new-quote-cron";
 import { getUserSettingsRouter } from "./supabase/get-user-settings";
 import { editApiSettings } from "./supabase/edit-api";
-import { deleteApiSettings } from "./supabase/disable-api";
+import { deleteApiSettings } from "./supabase/delete-api";
 
 export const appRouter = createRouter()
   .transformer(superjson)

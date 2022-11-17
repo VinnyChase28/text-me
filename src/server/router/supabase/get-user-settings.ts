@@ -11,7 +11,6 @@ export const getUserSettingsRouter = createRouter().query("get-user-settings", {
     const { data, error } = await supabase
       .from("phone_numbers")
       .select("weather, quotes");
-    console.log(data);
     return {
       response: data,
     };
