@@ -9,6 +9,7 @@ import ProfileCard from "../components/Cards/ProfileCard";
 
 const Profile: NextPage = () => {
   const user = supabase.auth.user();
+  console.log(user);
   const router = useRouter();
   const [location, setLocation] = useState({
     latitude: null,

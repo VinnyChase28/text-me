@@ -10,8 +10,7 @@ export const getUserSettingsRouter = createRouter().query("get-user-settings", {
     //add the new api's to this query when they are ready
     const { data, error } = await supabase
       .from("phone_numbers")
-      .select("weather, quotes")
-      .eq("phone_number", input.phone);
+      .select("weather, quotes");
     if (error) {
       return { error: error.message };
     }
